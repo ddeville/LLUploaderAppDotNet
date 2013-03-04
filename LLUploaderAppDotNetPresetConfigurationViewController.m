@@ -18,7 +18,7 @@
 
 - (id)init
 {
-	return [self initWithNibName:@"LLUploaderAppDotNetPresetConfigurationView" bundle:[NSBundle bundleWithIdentifier:LLAppDotNetBundleIdentifier]];
+	return [self initWithNibName:@"LLUploaderAppDotNetPresetConfigurationView" bundle:[NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier]];
 }
 
 @end

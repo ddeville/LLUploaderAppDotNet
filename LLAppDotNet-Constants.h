@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const LLAppDotNetBundleIdentifier;
+extern NSString * const LLUploaderAppDotNetBundleIdentifier;
 
-extern NSString * const LLAppDotNetErrorDomain;
+extern NSString * const LLUploaderAppDotNetErrorDomain;
 
-typedef NS_ENUM (NSInteger, LLAppDotNetErrorCode) {
-	LLAppDotNetUnknownError = 0,
+typedef NS_ENUM (NSInteger, LLUploaderAppDotNetErrorCode) {
+	LLUploaderAppDotNetUnknownError = 0,
 	
-	LLAppDotNetErrorCodeInvalidCredentials = -100,
+	LLUploaderAppDotNetErrorCodeInvalidCredentials = -100,
 };

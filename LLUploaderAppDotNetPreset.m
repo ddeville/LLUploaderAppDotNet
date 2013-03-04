@@ -22,7 +22,7 @@
 
 + (NSImage *)icon
 {
-	return [[[NSImage alloc] initWithContentsOfURL:[[NSBundle bundleWithIdentifier:LLAppDotNetBundleIdentifier] URLForImageResource:@"app_dot_net"]] autorelease];
+	return [[[NSImage alloc] initWithContentsOfURL:[[NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier] URLForImageResource:@"app_dot_net"]] autorelease];
 }
 
 + (Class)uploadTaskClass

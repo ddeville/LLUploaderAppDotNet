@@ -8,6 +8,6 @@
 
 #import "LLAppDotNet-Constants.h"
 
-NSString * const LLAppDotNetBundleIdentifier = @"com.lickalemon.uploader.appdotnet";
+NSString * const LLUploaderAppDotNetBundleIdentifier = @"com.lickalemon.uploader.appdotnet";
 
-NSString * const LLAppDotNetErrorDomain = @"com.lickalemon.uploader.appdotnet";
+NSString * const LLUploaderAppDotNetErrorDomain = @"com.lickalemon.uploader.appdotnet";

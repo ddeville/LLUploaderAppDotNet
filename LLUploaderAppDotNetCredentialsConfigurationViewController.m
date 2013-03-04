@@ -8,10 +8,13 @@
 
 #import "LLUploaderAppDotNetCredentialsConfigurationViewController.h"
 
+#import <objc/message.h>
+
 #import "RMUploadKit/RMUploadURLConnection+Private.h"
 
 #import "LLUploaderAppDotNetCredentials.h"
 #import "LLAppDotNetContext.h"
+#import "LLErrorRecoveryAttempter.h"
 
 #import "LLAppDotNet-Constants.h"
 
@@ -39,7 +42,7 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 
 - (id)init
 {
-	return [self initWithNibName:@"LLUploaderAppDotNetCredentialsConfigurationView" bundle:[NSBundle bundleWithIdentifier:LLAppDotNetBundleIdentifier]];
+	return [self initWithNibName:@"LLUploaderAppDotNetCredentialsConfigurationView" bundle:[NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier]];
 }
 
 - (void)dealloc
@@ -158,8 +161,35 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 
 - (void)_failWithError:(NSError *)error
 {
-	if ([[error domain] isEqualToString:LLAppDotNetErrorDomain] && [error code] == LLAppDotNetErrorCodeInvalidCredentials) {
+	if ([[error domain] isEqualToString:LLUploaderAppDotNetErrorDomain] && [error code] == LLUploaderAppDotNetErrorCodeInvalidCredentials) {
+		LLErrorRecoveryAttempter *recoveryAttempter = [[[LLErrorRecoveryAttempter alloc] init] autorelease];
+		[recoveryAttempter addRecoveryOptionWithLocalizedTitle:NSLocalizedStringFromTableInBundle(@"Sign In", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderTumblrCredentialsViewController blank password sign in error recovery suggestion") recoveryBlock:^ (NSError *recoveryError) {
+			NSError *signInError = [NSError errorWithDomain:RMUploadKitBundleIdentifier code:RMUploadCredentialsErrorRequiresReauthentication userInfo:nil];
+			
+			NSDictionary *notificationInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+											  signInError, RMUploadPresetConfigurationViewControllerDidCompleteErrorKey,
+											  nil];
+			[[NSNotificationCenter defaultCenter] postNotificationName:RMUploadPresetConfigurationViewControllerDidCompleteNotificationName object:self userInfo:notificationInfo];
+			return NO;
+		}];
+		[recoveryAttempter addRecoveryOptionWithLocalizedTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderTumblrCredentialsViewController blank password close error recovery suggestion") recoveryBlock:^ (NSError *recoveryError) {
+			NSError *cancelledError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
+			
+			NSDictionary *notificationInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+											  cancelledError, RMUploadPresetConfigurationViewControllerDidCompleteErrorKey,
+											  nil];
+			[[NSNotificationCenter defaultCenter] postNotificationName:RMUploadPresetConfigurationViewControllerDidCompleteNotificationName object:self userInfo:notificationInfo];
+			return NO;
+		}];
 		
+		NSDictionary *errorInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+								   [error localizedDescription], NSLocalizedDescriptionKey,
+								   [error localizedRecoverySuggestion], NSLocalizedRecoverySuggestionErrorKey,
+								   recoveryAttempter, NSRecoveryAttempterErrorKey,
+								   [recoveryAttempter recoveryOptions], NSLocalizedRecoveryOptionsErrorKey,
+								   error, NSUnderlyingErrorKey,
+								   nil];
+		error = [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:LLUploaderAppDotNetUnknownError userInfo:errorInfo];
 	}
 	
 	NSDictionary *notificationInfo = [NSDictionary dictionaryWithObjectsAndKeys:
