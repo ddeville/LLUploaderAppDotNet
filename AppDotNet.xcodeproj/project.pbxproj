@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6D42B65016E531FB00C96B4F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D42B64F16E531FB00C96B4F /* Cocoa.framework */; };
-		6D42B69816E534CF00C96B4F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6D42B69516E534CF00C96B4F /* InfoPlist.strings */; };
-		6D42B69916E534CF00C96B4F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D42B69716E534CF00C96B4F /* Info.plist */; };
 		6D42B69C16E5359000C96B4F /* LLAppDotNetContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B69B16E5359000C96B4F /* LLAppDotNetContext.m */; };
 		6D42B6A216E535CF00C96B4F /* LLUploaderAppDotNet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B6A116E535CF00C96B4F /* LLUploaderAppDotNet.m */; };
 		6D42B6A516E535F300C96B4F /* LLUploaderAppDotNetUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B6A416E535F300C96B4F /* LLUploaderAppDotNetUploadTask.m */; };
@@ -21,6 +19,7 @@
 		6D42B6EB16E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B6E916E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.m */; };
 		6D42B6ED16E53C3F00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D42B6EF16E53C3F00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib */; };
 		6D42B6F016E53C4900C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D42B6F216E53C4900C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib */; };
+		6D42B6F316E5441300C96B4F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6D42B69516E534CF00C96B4F /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -222,10 +221,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D42B69816E534CF00C96B4F /* InfoPlist.strings in Resources */,
-				6D42B69916E534CF00C96B4F /* Info.plist in Resources */,
 				6D42B6ED16E53C3F00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib in Resources */,
 				6D42B6F016E53C4900C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib in Resources */,
+				6D42B6F316E5441300C96B4F /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

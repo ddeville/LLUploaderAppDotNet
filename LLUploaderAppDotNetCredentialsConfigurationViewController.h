@@ -8,6 +8,13 @@
 
 #import <RMUploadKit/RMUploadKit.h>
 
+@class LLUploaderAppDotNetCredentials;
+
 @interface LLUploaderAppDotNetCredentialsConfigurationViewController : RMUploadPresetConfigurationViewController
+
+@property (strong, nonatomic) LLUploaderAppDotNetCredentials *representedObject;
+
+@property (copy, nonatomic) NSString *password;
+@property (readonly, getter = isAuthenticating, nonatomic) BOOL authenticating;
 
 @end

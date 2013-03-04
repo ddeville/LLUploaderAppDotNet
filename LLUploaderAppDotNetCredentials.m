@@ -10,4 +10,11 @@
 
 @implementation LLUploaderAppDotNetCredentials
 
+- (void)dealloc
+{
+	[_username release];
+	
+	[super dealloc];
+}
+
 @end
