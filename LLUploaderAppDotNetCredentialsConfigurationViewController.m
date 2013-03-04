@@ -9,6 +9,7 @@
 #import "LLUploaderAppDotNetCredentialsConfigurationViewController.h"
 
 #import "LLUploaderAppDotNetCredentials.h"
+#import "LLAppDotNetContext.h"
 
 #import "LLAppDotNet-Constants.h"
 
@@ -101,7 +102,6 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 
 - (IBAction)nextStage:(id)sender
 {
-#if 0
 	BOOL (^validateTextField)(NSTextField *) = ^ (NSTextField *field) {
 		[field validateEditing];
 		if ([field stringValue] != nil && [[field stringValue] length] > 0) {
@@ -119,37 +119,18 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 	};
 	
 	if (!validateTextField([self usernameTextField])) {
+		[[[self view] window] makeFirstResponder:[self usernameTextField]];
 		return;
 	}
 	NSString *username = [[self usernameTextField] stringValue];
 	
 	if (!validateTextField([self passwordTextField])) {
+		[[[self view] window] makeFirstResponder:[self passwordTextField]];
 		return;
 	}
 	NSString *password = [[self passwordTextField] stringValue];
 	
-	RMTumblrContext *context = [[[RMTumblrContext alloc] init] autorelease];
-	[RMUploaderTumblr authenticateContext:context withCredentials:nil];
-	NSURLRequest *authenticateRequest = [context requestOAuthTokenCredentialsWithUsername:username password:password];
-	
-	[self setAuthenticationConnection:[RMUploadURLConnection _connectionWithRequest: authenticateRequest responseProviderBlock: ^ (_RMUploadURLConnectionResponseProviderBlock responseProvider) {
-		[self setAuthenticationConnection:nil];
-		
-		NSString *OAuthToken = nil, *OAuthSecret = nil;
-		
-		NSError *parseAuthenticationResponseError = nil;
-		BOOL parseAuthenticationResponse = [RMTumblrContext parseAuthenticationResponseWithProvider:responseProvider OAuthToken:&OAuthToken OAuthSecret:&OAuthSecret error:&parseAuthenticationResponseError];
-		if (!parseAuthenticationResponse) {
-			[self _failWithError:parseAuthenticationResponseError];
-			return;
-		}
-		
-		[(RMUploaderTumblrCredentials *)[self representedObject] setOAuthToken:OAuthToken];
-		[(RMUploaderTumblrCredentials *)[self representedObject] setOAuthSecret:OAuthSecret];
-		
-		[super nextStage:sender];
-	}]];
-#endif
+	LLAppDotNetContext *context = [[[LLAppDotNetContext alloc] init] autorelease];
 }
 
 @end
