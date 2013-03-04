@@ -99,7 +99,9 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 	[self setAuthenticationConnection:nil];
 }
 
-- (IBAction)nextStage:(id)sender {
+- (IBAction)nextStage:(id)sender
+{
+#if 0
 	BOOL (^validateTextField)(NSTextField *) = ^ (NSTextField *field) {
 		[field validateEditing];
 		if ([field stringValue] != nil && [[field stringValue] length] > 0) {
@@ -147,6 +149,7 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 		
 		[super nextStage:sender];
 	}]];
+#endif
 }
 
 @end

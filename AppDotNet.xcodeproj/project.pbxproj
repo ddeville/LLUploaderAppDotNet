@@ -13,13 +13,13 @@
 		6D42B6A516E535F300C96B4F /* LLUploaderAppDotNetUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B6A416E535F300C96B4F /* LLUploaderAppDotNetUploadTask.m */; };
 		6D42B6A816E5360700C96B4F /* LLUploaderAppDotNetCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B6A716E5360700C96B4F /* LLUploaderAppDotNetCredentials.m */; };
 		6D42B6AB16E5361200C96B4F /* LLUploaderAppDotNetPreset.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B6AA16E5361200C96B4F /* LLUploaderAppDotNetPreset.m */; };
-		6D42B6AD16E5386E00C96B4F /* RMUploadKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D42B6AC16E5386E00C96B4F /* RMUploadKit.framework */; };
 		6D42B6E216E53BB600C96B4F /* LLAppDotNet-Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B6E116E53BB600C96B4F /* LLAppDotNet-Constants.m */; };
 		6D42B6E616E53C1200C96B4F /* LLUploaderAppDotNetCredentialsConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B6E416E53C1200C96B4F /* LLUploaderAppDotNetCredentialsConfigurationViewController.m */; };
 		6D42B6EB16E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B6E916E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.m */; };
 		6D42B6F316E5441300C96B4F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6D42B69516E534CF00C96B4F /* InfoPlist.strings */; };
 		6D42B72C16E5561E00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D42B72E16E5561E00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib */; };
 		6D42B72F16E5562400C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D42B73116E5562400C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib */; };
+		6D42B73516E5572F00C96B4F /* RMUploadKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D42B73416E5572F00C96B4F /* RMUploadKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,7 +40,6 @@
 		6D42B6A716E5360700C96B4F /* LLUploaderAppDotNetCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLUploaderAppDotNetCredentials.m; sourceTree = "<group>"; };
 		6D42B6A916E5361200C96B4F /* LLUploaderAppDotNetPreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLUploaderAppDotNetPreset.h; sourceTree = "<group>"; };
 		6D42B6AA16E5361200C96B4F /* LLUploaderAppDotNetPreset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLUploaderAppDotNetPreset.m; sourceTree = "<group>"; };
-		6D42B6AC16E5386E00C96B4F /* RMUploadKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RMUploadKit.framework; path = ../../Library/Developer/Xcode/SDKs/RMUploadKit.sdk/Library/Frameworks/RMUploadKit.framework; sourceTree = "<group>"; };
 		6D42B6E016E53BB600C96B4F /* LLAppDotNet-Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LLAppDotNet-Constants.h"; sourceTree = "<group>"; };
 		6D42B6E116E53BB600C96B4F /* LLAppDotNet-Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LLAppDotNet-Constants.m"; sourceTree = "<group>"; };
 		6D42B6E316E53C1200C96B4F /* LLUploaderAppDotNetCredentialsConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLUploaderAppDotNetCredentialsConfigurationViewController.h; sourceTree = "<group>"; };
@@ -49,6 +48,7 @@
 		6D42B6E916E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLUploaderAppDotNetPresetConfigurationViewController.m; sourceTree = "<group>"; };
 		6D42B72D16E5561E00C96B4F /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file; name = "en-GB"; path = "en-GB.lproj/LLUploaderAppDotNetCredentialsConfigurationView.xib"; sourceTree = "<group>"; };
 		6D42B73016E5562400C96B4F /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file; name = "en-GB"; path = "en-GB.lproj/LLUploaderAppDotNetPresetConfigurationView.xib"; sourceTree = "<group>"; };
+		6D42B73416E5572F00C96B4F /* RMUploadKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RMUploadKit.framework; path = Frameworks/RMUploadKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +57,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D42B65016E531FB00C96B4F /* Cocoa.framework in Frameworks */,
-				6D42B6AD16E5386E00C96B4F /* RMUploadKit.framework in Frameworks */,
+				6D42B73516E5572F00C96B4F /* RMUploadKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,9 +85,9 @@
 		6D42B64E16E531FB00C96B4F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6D42B6AC16E5386E00C96B4F /* RMUploadKit.framework */,
 				6D42B64F16E531FB00C96B4F /* Cocoa.framework */,
 				6D42B65116E531FB00C96B4F /* Other Frameworks */,
+				6D42B73416E5572F00C96B4F /* RMUploadKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -341,7 +341,7 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../Library/Developer/Xcode/SDKs/RMUploadKit.sdk/Library/Frameworks\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				IBC_FLATTEN_NIBS = NO;
 				INFOPLIST_FILE = Info.plist;
@@ -363,7 +363,7 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../Library/Developer/Xcode/SDKs/RMUploadKit.sdk/Library/Frameworks\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				IBC_FLATTEN_NIBS = NO;
 				INFOPLIST_FILE = Info.plist;
