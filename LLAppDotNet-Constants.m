@@ -9,3 +9,5 @@
 #import "LLAppDotNet-Constants.h"
 
 NSString * const LLAppDotNetBundleIdentifier = @"com.lickalemon.uploader.appdotnet";
+
+NSString * const LLAppDotNetErrorDomain = @"com.lickalemon.uploader.appdotnet";

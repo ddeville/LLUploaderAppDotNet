@@ -8,6 +8,8 @@
 
 #import "LLUploaderAppDotNetCredentialsConfigurationViewController.h"
 
+#import "RMUploadKit/RMUploadURLConnection+Private.h"
+
 #import "LLUploaderAppDotNetCredentials.h"
 #import "LLAppDotNetContext.h"
 
@@ -27,7 +29,7 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 
 @property (readwrite, nonatomic) BOOL authenticating;
 
-@property (strong, nonatomic) NSURLConnection *authenticationConnection;
+@property (strong, nonatomic) RMUploadURLConnection *authenticationConnection;
 
 @end
 
@@ -131,6 +133,39 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 	NSString *password = [[self passwordTextField] stringValue];
 	
 	LLAppDotNetContext *context = [[[LLAppDotNetContext alloc] init] autorelease];
+	NSURLRequest *authenticationRequest = [context requestOAuthTokenCredentialsWithUsername:username password:password];
+	
+	[self setAuthenticationConnection:[RMUploadURLConnection _connectionWithRequest:authenticationRequest responseProviderBlock:^ (_RMUploadURLConnectionResponseProviderBlock responseProvider) {
+		[self setAuthenticationConnection:nil];
+		
+		NSString *OAuthToken = nil, *OAuthSecret = nil;
+		
+		NSError *parseAuthenticationResponseError = nil;
+		BOOL parseAuthenticationResponse = [LLAppDotNetContext parseAuthenticationResponseWithProvider:responseProvider OAuthToken:&OAuthToken OAuthSecret:&OAuthSecret error:&parseAuthenticationResponseError];
+		if (!parseAuthenticationResponse) {
+			[self _failWithError:parseAuthenticationResponseError];
+			return;
+		}
+		
+		[[self representedObject] setOAuthToken:OAuthToken];
+		[[self representedObject] setOAuthSecret:OAuthSecret];
+		
+		[super nextStage:sender];
+	}]];
+}
+
+#pragma mark - Private
+
+- (void)_failWithError:(NSError *)error
+{
+	if ([[error domain] isEqualToString:LLAppDotNetErrorDomain] && [error code] == LLAppDotNetErrorCodeInvalidCredentials) {
+		
+	}
+	
+	NSDictionary *notificationInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+									  error, RMUploadPresetConfigurationViewControllerDidCompleteErrorKey,
+									  nil];
+	[[NSNotificationCenter defaultCenter] postNotificationName:RMUploadPresetConfigurationViewControllerDidCompleteNotificationName object:self userInfo:notificationInfo];
 }
 
 @end

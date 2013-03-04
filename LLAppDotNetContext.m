@@ -10,4 +10,14 @@
 
 @implementation LLAppDotNetContext
 
+- (NSURLRequest *)requestOAuthTokenCredentialsWithUsername:(NSString *)username password:(NSString *)password
+{
+	return nil;
+}
+
++ (BOOL)parseAuthenticationResponseWithProvider:(_RMUploadURLConnectionResponseProviderBlock)responseProvider OAuthToken:(NSString **)OAuthTokenRef OAuthSecret:(NSString **)OAuthSecretRef error:(NSError **)errorRef
+{
+	return NO;
+}
+
 @end

@@ -8,6 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "RMUploadKit/RMUploadURLConnection+Private.h"
+
 @interface LLAppDotNetContext : NSObject
+
+- (NSURLRequest *)requestOAuthTokenCredentialsWithUsername:(NSString *)username password:(NSString *)password;
++ (BOOL)parseAuthenticationResponseWithProvider:(_RMUploadURLConnectionResponseProviderBlock)responseProvider OAuthToken:(NSString **)OAuthTokenRef OAuthSecret:(NSString **)OAuthSecretRef error:(NSError **)errorRef;
 
 @end

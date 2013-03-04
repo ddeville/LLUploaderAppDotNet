@@ -14,4 +14,6 @@
 
 @property (copy, nonatomic) NSString *username;
 
+@property (copy, nonatomic) NSString *OAuthToken, *OAuthSecret;
+
 @end

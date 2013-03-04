@@ -9,3 +9,11 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const LLAppDotNetBundleIdentifier;
+
+extern NSString * const LLAppDotNetErrorDomain;
+
+typedef NS_ENUM (NSInteger, LLAppDotNetErrorCode) {
+	LLAppDotNetUnknownError = 0,
+	
+	LLAppDotNetErrorCodeInvalidCredentials = -100,
+};

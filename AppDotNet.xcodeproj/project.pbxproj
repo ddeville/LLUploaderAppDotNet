@@ -46,8 +46,8 @@
 		6D42B6E416E53C1200C96B4F /* LLUploaderAppDotNetCredentialsConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLUploaderAppDotNetCredentialsConfigurationViewController.m; sourceTree = "<group>"; };
 		6D42B6E816E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLUploaderAppDotNetPresetConfigurationViewController.h; sourceTree = "<group>"; };
 		6D42B6E916E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLUploaderAppDotNetPresetConfigurationViewController.m; sourceTree = "<group>"; };
-		6D42B72D16E5561E00C96B4F /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file; name = "en-GB"; path = "en-GB.lproj/LLUploaderAppDotNetCredentialsConfigurationView.xib"; sourceTree = "<group>"; };
-		6D42B73016E5562400C96B4F /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file; name = "en-GB"; path = "en-GB.lproj/LLUploaderAppDotNetPresetConfigurationView.xib"; sourceTree = "<group>"; };
+		6D42B72D16E5561E00C96B4F /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/LLUploaderAppDotNetCredentialsConfigurationView.xib"; sourceTree = "<group>"; };
+		6D42B73016E5562400C96B4F /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/LLUploaderAppDotNetPresetConfigurationView.xib"; sourceTree = "<group>"; };
 		6D42B73416E5572F00C96B4F /* RMUploadKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RMUploadKit.framework; path = Frameworks/RMUploadKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -397,6 +397,7 @@
 				6D42B66016E531FB00C96B4F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
