@@ -17,9 +17,9 @@
 		6D42B6E216E53BB600C96B4F /* LLAppDotNet-Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B6E116E53BB600C96B4F /* LLAppDotNet-Constants.m */; };
 		6D42B6E616E53C1200C96B4F /* LLUploaderAppDotNetCredentialsConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B6E416E53C1200C96B4F /* LLUploaderAppDotNetCredentialsConfigurationViewController.m */; };
 		6D42B6EB16E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B6E916E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.m */; };
-		6D42B6ED16E53C3F00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D42B6EF16E53C3F00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib */; };
-		6D42B6F016E53C4900C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D42B6F216E53C4900C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib */; };
 		6D42B6F316E5441300C96B4F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6D42B69516E534CF00C96B4F /* InfoPlist.strings */; };
+		6D42B72C16E5561E00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D42B72E16E5561E00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib */; };
+		6D42B72F16E5562400C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D42B73116E5562400C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,8 +47,8 @@
 		6D42B6E416E53C1200C96B4F /* LLUploaderAppDotNetCredentialsConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLUploaderAppDotNetCredentialsConfigurationViewController.m; sourceTree = "<group>"; };
 		6D42B6E816E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLUploaderAppDotNetPresetConfigurationViewController.h; sourceTree = "<group>"; };
 		6D42B6E916E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLUploaderAppDotNetPresetConfigurationViewController.m; sourceTree = "<group>"; };
-		6D42B6EE16E53C3F00C96B4F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LLUploaderAppDotNetCredentialsConfigurationView.xib; sourceTree = "<group>"; };
-		6D42B6F116E53C4900C96B4F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LLUploaderAppDotNetPresetConfigurationView.xib; sourceTree = "<group>"; };
+		6D42B72D16E5561E00C96B4F /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file; name = "en-GB"; path = "en-GB.lproj/LLUploaderAppDotNetCredentialsConfigurationView.xib"; sourceTree = "<group>"; };
+		6D42B73016E5562400C96B4F /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file; name = "en-GB"; path = "en-GB.lproj/LLUploaderAppDotNetPresetConfigurationView.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,10 +152,10 @@
 			children = (
 				6D42B6E316E53C1200C96B4F /* LLUploaderAppDotNetCredentialsConfigurationViewController.h */,
 				6D42B6E416E53C1200C96B4F /* LLUploaderAppDotNetCredentialsConfigurationViewController.m */,
-				6D42B6EF16E53C3F00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib */,
+				6D42B72E16E5561E00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib */,
 				6D42B6E816E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.h */,
 				6D42B6E916E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.m */,
-				6D42B6F216E53C4900C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib */,
+				6D42B73116E5562400C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -221,9 +221,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D42B6ED16E53C3F00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib in Resources */,
-				6D42B6F016E53C4900C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib in Resources */,
 				6D42B6F316E5441300C96B4F /* InfoPlist.strings in Resources */,
+				6D42B72C16E5561E00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib in Resources */,
+				6D42B72F16E5562400C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,18 +256,18 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		6D42B6EF16E53C3F00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib */ = {
+		6D42B72E16E5561E00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				6D42B6EE16E53C3F00C96B4F /* en */,
+				6D42B72D16E5561E00C96B4F /* en-GB */,
 			);
 			name = LLUploaderAppDotNetCredentialsConfigurationView.xib;
 			sourceTree = "<group>";
 		};
-		6D42B6F216E53C4900C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib */ = {
+		6D42B73116E5562400C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				6D42B6F116E53C4900C96B4F /* en */,
+				6D42B73016E5562400C96B4F /* en-GB */,
 			);
 			name = LLUploaderAppDotNetPresetConfigurationView.xib;
 			sourceTree = "<group>";
