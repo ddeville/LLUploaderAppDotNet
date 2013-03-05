@@ -12,6 +12,8 @@
 
 #import "LLUploaderAppDotNet-Constants.h"
 
+#define _LLAppDotNetContextCast(cls, obj) ({ id __obj = (obj); [__obj isKindOfClass:[cls class]] ? __obj : nil; })
+
 @interface LLAppDotNetContext ()
 
 @property (copy, nonatomic) NSString *clientID, *passwordGrantSecret;
@@ -58,6 +60,12 @@
 	
 	NSParameterAssert([self _checkHasOAuthClientAuthentication]);
 	
+	/*
+		Note:
+		
+		These parameters are defined in http://developers.app.net/docs/authentication/flows/password
+	 */
+	
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
 	[request setHTTPMethod:@"POST"];
 	[request setURL:[NSURL URLWithString:@"https://alpha.app.net/oauth/access_token"]];
@@ -87,9 +95,9 @@
 		return nil;
 	}
 	
-//	if (![self _checkResponse:response bodyData:bodyData errorDescription:CannotSigninToTumblrErrorDescription() supplementaryErrorRecoverySuggestions:[self _authenticationResponseSupplementaryErrorRecoverySuggestionsMap] error:errorRef]) {
-//		return NO;
-//	}
+	if (![self _checkResponse:response bodyData:bodyData error:errorRef]) {
+		return nil;
+	}
 	
 	void (^returnUnexpectedError)(NSString *, NSError *) = ^ (NSString *description, NSError *underlyingError) {
 		if (errorRef != NULL) {
@@ -115,10 +123,7 @@
 		return nil;
 	}
 	
-	if (![responseJSON isKindOfClass:[NSDictionary class]]) {
-		returnUnexpectedError(nil, nil);
-		return nil;
-	}
+	responseJSON = _LLAppDotNetContextCast(NSDictionary, responseJSON);
 	
 	NSString *accessToken = [responseJSON objectForKey:@"access_token"];
 	if (accessToken == nil) {
@@ -132,7 +137,7 @@
 	return accessToken;
 }
 
-#pragma mark - Private
+#pragma mark - Authentication (Private)
 
 - (BOOL)_checkHasOAuthClientAuthentication
 {
@@ -146,18 +151,51 @@
 	return hasOAuthClientAuthentication;
 }
 
-static NSString * const _LLAppDotNetContextApplicationFormURLEncodedMIMEType = @"application/x-www-form-urlencoded";
+- (void)_addAuthenticationToRequest:(NSMutableURLRequest *)request
+{
+	static NSString * const _LLAppDotNetContextHTTPHeaderFieldAuthorization = @"Authorization";
+	static NSString * const _LLAppDotNetContextAuthenticationTokenTypeKey = @"Bearer";
+	
+	/*
+		Note:
+		
+		This is the value documented in http://developers.app.net/docs/authentication
+	 */
+	NSString *authenticationHeaderValue = [NSString stringWithFormat:@"%@ %@", _LLAppDotNetContextAuthenticationTokenTypeKey, [self accessToken]];
+	[request setValue:authenticationHeaderValue forHTTPHeaderField:_LLAppDotNetContextHTTPHeaderFieldAuthorization];
+}
+
+#pragma mark - Response (Private)
+
++ (BOOL)_checkResponse:(NSURLResponse *)response bodyData:(NSData *)bodyData error:(NSError **)errorRef
+{
+	NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+	if (statusCode >= 200 && statusCode <= 299) {
+		return YES;
+	}
+	
+	if (errorRef != NULL) {
+#warning Create error here!
+	}
+	
+	return NO;
+}
+
+#pragma mark - Helpers (Private)
 
 - (void)_addBodyParameters:(NSDictionary *)parameters toRequest:(NSMutableURLRequest *)request
 {
-	NSString *bodyString = [self _encodeParameters:parameters];
+	static NSString * const _LLAppDotNetContextHTTPHeaderFieldContentType = @"Content-Type";
+	static NSString * const _LLAppDotNetContextApplicationFormURLEncodedMIMEType = @"application/x-www-form-urlencoded";
+	
+	NSString *bodyString = [self __encodeParameters:parameters];
 	NSData *bodyData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
 	
-	[request setValue:_LLAppDotNetContextApplicationFormURLEncodedMIMEType forHTTPHeaderField:@"Content-Type"];
+	[request setValue:_LLAppDotNetContextApplicationFormURLEncodedMIMEType forHTTPHeaderField:_LLAppDotNetContextHTTPHeaderFieldContentType];
 	[request setHTTPBody:bodyData];
 }
 
-- (NSString *)_encodeParameters:(NSDictionary *)parameters
+- (NSString *)__encodeParameters:(NSDictionary *)parameters
 {
 	NSMutableArray *parameterPairs = [NSMutableArray arrayWithCapacity:[parameters count]];
 	
