@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6D42B64C16E531FB00C96B4F /* AppDotNet.uploader */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppDotNet.uploader; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D42B64C16E531FB00C96B4F /* LLUploaderAppDotNet.uploader */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLUploaderAppDotNet.uploader; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D42B64F16E531FB00C96B4F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		6D42B65216E531FB00C96B4F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		6D42B65316E531FB00C96B4F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -80,7 +80,7 @@
 		6D42B64D16E531FB00C96B4F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6D42B64C16E531FB00C96B4F /* AppDotNet.uploader */,
+				6D42B64C16E531FB00C96B4F /* LLUploaderAppDotNet.uploader */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -185,9 +185,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6D42B64B16E531FB00C96B4F /* AppDotNet */ = {
+		6D42B64B16E531FB00C96B4F /* LLUploaderAppDotNet */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6D42B65E16E531FB00C96B4F /* Build configuration list for PBXNativeTarget "AppDotNet" */;
+			buildConfigurationList = 6D42B65E16E531FB00C96B4F /* Build configuration list for PBXNativeTarget "LLUploaderAppDotNet" */;
 			buildPhases = (
 				6D42B64816E531FB00C96B4F /* Sources */,
 				6D42B64916E531FB00C96B4F /* Frameworks */,
@@ -197,9 +197,9 @@
 			);
 			dependencies = (
 			);
-			name = AppDotNet;
+			name = LLUploaderAppDotNet;
 			productName = AppDotNet;
-			productReference = 6D42B64C16E531FB00C96B4F /* AppDotNet.uploader */;
+			productReference = 6D42B64C16E531FB00C96B4F /* LLUploaderAppDotNet.uploader */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -211,7 +211,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Damien DeVille";
 			};
-			buildConfigurationList = 6D42B64716E531FB00C96B4F /* Build configuration list for PBXProject "AppDotNet" */;
+			buildConfigurationList = 6D42B64716E531FB00C96B4F /* Build configuration list for PBXProject "LLUploaderAppDotNet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -224,7 +224,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6D42B64B16E531FB00C96B4F /* AppDotNet */,
+				6D42B64B16E531FB00C96B4F /* LLUploaderAppDotNet */,
 			);
 		};
 /* End PBXProject section */
@@ -364,7 +364,7 @@
 					"-framework",
 					RMUploadKit,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = LLUploaderAppDotNet;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = uploader;
 			};
@@ -386,7 +386,7 @@
 					"-framework",
 					RMUploadKit,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = LLUploaderAppDotNet;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = uploader;
 			};
@@ -395,7 +395,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6D42B64716E531FB00C96B4F /* Build configuration list for PBXProject "AppDotNet" */ = {
+		6D42B64716E531FB00C96B4F /* Build configuration list for PBXProject "LLUploaderAppDotNet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6D42B65C16E531FB00C96B4F /* Debug */,
@@ -404,7 +404,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6D42B65E16E531FB00C96B4F /* Build configuration list for PBXNativeTarget "AppDotNet" */ = {
+		6D42B65E16E531FB00C96B4F /* Build configuration list for PBXNativeTarget "LLUploaderAppDotNet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6D42B65F16E531FB00C96B4F /* Debug */,
