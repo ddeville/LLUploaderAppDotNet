@@ -10,6 +10,10 @@
 
 #import "RMUploadKit/RMUploadKit.h"
 
+#import "LLUploaderAppDotNetCredentials.h"
+
 @interface LLUploaderAppDotNetPreset : RMUploadPreset
+
+@property (readonly, assign, nonatomic) LLUploaderAppDotNetCredentials *authentication;
 
 @end

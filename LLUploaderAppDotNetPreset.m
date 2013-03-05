@@ -15,6 +15,8 @@
 
 @implementation LLUploaderAppDotNetPreset
 
+@dynamic authentication;
+
 + (NSString *)localisedName
 {
 	return @"App.net";

@@ -36,7 +36,8 @@ static NSString * const _LLUploaderAppDotNetPasswordGrantSecret = @"3ATd9EtxSDpj
 
 - (RMUploadPresetConfigurationViewController *)presetConfigurationViewControllerForPreset:(RMUploadPreset *)preset
 {
-	return [[[LLUploaderAppDotNetPresetConfigurationViewController alloc] init] autorelease];
+	return nil;
+//	return [[[LLUploaderAppDotNetPresetConfigurationViewController alloc] init] autorelease];
 }
 
 @end
