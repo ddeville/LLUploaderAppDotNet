@@ -1,5 +1,5 @@
 //
-//  LLAppDotNet-Constants.h
+//  LLUploaderAppDotNet-Constants.h
 //  AppDotNet
 //
 //  Created by Damien DeVille on 3/4/13.

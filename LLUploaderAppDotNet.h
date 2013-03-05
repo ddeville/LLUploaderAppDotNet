@@ -10,6 +10,10 @@
 
 #import "RMUploadKit/RMUploadKit.h"
 
+@class LLAppDotNetContext, LLUploaderAppDotNetCredentials;
+
 @interface LLUploaderAppDotNet : RMUploadPlugin
+
++ (void)authenticateContext:(LLAppDotNetContext *)context withCredentials:(LLUploaderAppDotNetCredentials *)credentials;
 
 @end

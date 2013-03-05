@@ -10,13 +10,13 @@
 
 #import <objc/message.h>
 
-#import "RMUploadKit/RMUploadURLConnection+Private.h"
+#import "RMFoundation/RMFoundation.h"
+#import "RMUploadKit/RMUploadKit+Private.h"
 
 #import "LLUploaderAppDotNetCredentials.h"
 #import "LLAppDotNetContext.h"
-#import "LLErrorRecoveryAttempter.h"
 
-#import "LLAppDotNet-Constants.h"
+#import "LLUploaderAppDotNet-Constants.h"
 
 static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControllerAuthenticatingKey = @"authenticating";
 static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControllerAuthenticationConnectionKey = @"authenticationConnection";
@@ -162,7 +162,7 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 - (void)_failWithError:(NSError *)error
 {
 	if ([[error domain] isEqualToString:LLUploaderAppDotNetErrorDomain] && [error code] == LLUploaderAppDotNetErrorCodeInvalidCredentials) {
-		LLErrorRecoveryAttempter *recoveryAttempter = [[[LLErrorRecoveryAttempter alloc] init] autorelease];
+		RMErrorRecoveryAttempter *recoveryAttempter = [[[RMErrorRecoveryAttempter alloc] init] autorelease];
 		[recoveryAttempter addRecoveryOptionWithLocalizedTitle:NSLocalizedStringFromTableInBundle(@"Sign In", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderTumblrCredentialsViewController blank password sign in error recovery suggestion") recoveryBlock:^ (NSError *recoveryError) {
 			NSError *signInError = [NSError errorWithDomain:RMUploadKitBundleIdentifier code:RMUploadCredentialsErrorRequiresReauthentication userInfo:nil];
 			
