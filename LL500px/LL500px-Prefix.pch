@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'LL500px' target in the 'LL500px' project
-//
-
-#ifdef __OBJC__
-	#import <Cocoa/Cocoa.h>
-#endif

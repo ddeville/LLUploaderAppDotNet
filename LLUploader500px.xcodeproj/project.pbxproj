@@ -7,83 +7,83 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6DB27F6A16E619AA00B898FC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DB27F6916E619AA00B898FC /* Cocoa.framework */; };
-		6DB27F7416E619AB00B898FC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6DB27F7216E619AB00B898FC /* InfoPlist.strings */; };
+		6DB27F8816E61A3E00B898FC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DB27F8716E61A3E00B898FC /* Cocoa.framework */; };
+		6DB27F9216E61A3E00B898FC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6DB27F9016E61A3E00B898FC /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6DB27F6616E619AA00B898FC /* LL500px.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LL500px.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		6DB27F6916E619AA00B898FC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		6DB27F6C16E619AA00B898FC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		6DB27F6D16E619AA00B898FC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		6DB27F6E16E619AA00B898FC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		6DB27F7116E619AB00B898FC /* LL500px-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LL500px-Info.plist"; sourceTree = "<group>"; };
-		6DB27F7316E619AB00B898FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6DB27F7516E619AB00B898FC /* LL500px-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LL500px-Prefix.pch"; sourceTree = "<group>"; };
+		6DB27F8416E61A3E00B898FC /* LLUploader500px.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLUploader500px.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DB27F8716E61A3E00B898FC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		6DB27F8A16E61A3E00B898FC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		6DB27F8B16E61A3E00B898FC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		6DB27F8C16E61A3E00B898FC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6DB27F8F16E61A3E00B898FC /* LLUploader500px-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LLUploader500px-Info.plist"; sourceTree = "<group>"; };
+		6DB27F9116E61A3E00B898FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6DB27F9316E61A3E00B898FC /* LLUploader500px-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LLUploader500px-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		6DB27F6316E619AA00B898FC /* Frameworks */ = {
+		6DB27F8116E61A3E00B898FC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DB27F6A16E619AA00B898FC /* Cocoa.framework in Frameworks */,
+				6DB27F8816E61A3E00B898FC /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6DB27F5D16E619AA00B898FC = {
+		6DB27F7B16E61A3E00B898FC = {
 			isa = PBXGroup;
 			children = (
-				6DB27F6F16E619AA00B898FC /* LL500px */,
-				6DB27F6816E619AA00B898FC /* Frameworks */,
-				6DB27F6716E619AA00B898FC /* Products */,
+				6DB27F8D16E61A3E00B898FC /* LLUploader500px */,
+				6DB27F8616E61A3E00B898FC /* Frameworks */,
+				6DB27F8516E61A3E00B898FC /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		6DB27F6716E619AA00B898FC /* Products */ = {
+		6DB27F8516E61A3E00B898FC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6DB27F6616E619AA00B898FC /* LL500px.bundle */,
+				6DB27F8416E61A3E00B898FC /* LLUploader500px.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6DB27F6816E619AA00B898FC /* Frameworks */ = {
+		6DB27F8616E61A3E00B898FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6DB27F6916E619AA00B898FC /* Cocoa.framework */,
-				6DB27F6B16E619AA00B898FC /* Other Frameworks */,
+				6DB27F8716E61A3E00B898FC /* Cocoa.framework */,
+				6DB27F8916E61A3E00B898FC /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6DB27F6B16E619AA00B898FC /* Other Frameworks */ = {
+		6DB27F8916E61A3E00B898FC /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6DB27F6C16E619AA00B898FC /* AppKit.framework */,
-				6DB27F6D16E619AA00B898FC /* CoreData.framework */,
-				6DB27F6E16E619AA00B898FC /* Foundation.framework */,
+				6DB27F8A16E61A3E00B898FC /* AppKit.framework */,
+				6DB27F8B16E61A3E00B898FC /* CoreData.framework */,
+				6DB27F8C16E61A3E00B898FC /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		6DB27F6F16E619AA00B898FC /* LL500px */ = {
+		6DB27F8D16E61A3E00B898FC /* LLUploader500px */ = {
 			isa = PBXGroup;
 			children = (
-				6DB27F7016E619AB00B898FC /* Supporting Files */,
+				6DB27F8E16E61A3E00B898FC /* Supporting Files */,
 			);
-			path = LL500px;
+			path = LLUploader500px;
 			sourceTree = "<group>";
 		};
-		6DB27F7016E619AB00B898FC /* Supporting Files */ = {
+		6DB27F8E16E61A3E00B898FC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				6DB27F7116E619AB00B898FC /* LL500px-Info.plist */,
-				6DB27F7216E619AB00B898FC /* InfoPlist.strings */,
-				6DB27F7516E619AB00B898FC /* LL500px-Prefix.pch */,
+				6DB27F8F16E61A3E00B898FC /* LLUploader500px-Info.plist */,
+				6DB27F9016E61A3E00B898FC /* InfoPlist.strings */,
+				6DB27F9316E61A3E00B898FC /* LLUploader500px-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -91,62 +91,62 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6DB27F6516E619AA00B898FC /* LL500px */ = {
+		6DB27F8316E61A3E00B898FC /* LLUploader500px */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6DB27F7816E619AB00B898FC /* Build configuration list for PBXNativeTarget "LL500px" */;
+			buildConfigurationList = 6DB27F9616E61A3E00B898FC /* Build configuration list for PBXNativeTarget "LLUploader500px" */;
 			buildPhases = (
-				6DB27F6216E619AA00B898FC /* Sources */,
-				6DB27F6316E619AA00B898FC /* Frameworks */,
-				6DB27F6416E619AA00B898FC /* Resources */,
+				6DB27F8016E61A3E00B898FC /* Sources */,
+				6DB27F8116E61A3E00B898FC /* Frameworks */,
+				6DB27F8216E61A3E00B898FC /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = LL500px;
-			productName = LL500px;
-			productReference = 6DB27F6616E619AA00B898FC /* LL500px.bundle */;
+			name = LLUploader500px;
+			productName = LLUploader500px;
+			productReference = 6DB27F8416E61A3E00B898FC /* LLUploader500px.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		6DB27F5E16E619AA00B898FC /* Project object */ = {
+		6DB27F7C16E61A3E00B898FC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Lick a Lemon";
 			};
-			buildConfigurationList = 6DB27F6116E619AA00B898FC /* Build configuration list for PBXProject "LL500px" */;
+			buildConfigurationList = 6DB27F7F16E61A3E00B898FC /* Build configuration list for PBXProject "LLUploader500px" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 6DB27F5D16E619AA00B898FC;
-			productRefGroup = 6DB27F6716E619AA00B898FC /* Products */;
+			mainGroup = 6DB27F7B16E61A3E00B898FC;
+			productRefGroup = 6DB27F8516E61A3E00B898FC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6DB27F6516E619AA00B898FC /* LL500px */,
+				6DB27F8316E61A3E00B898FC /* LLUploader500px */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		6DB27F6416E619AA00B898FC /* Resources */ = {
+		6DB27F8216E61A3E00B898FC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DB27F7416E619AB00B898FC /* InfoPlist.strings in Resources */,
+				6DB27F9216E61A3E00B898FC /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		6DB27F6216E619AA00B898FC /* Sources */ = {
+		6DB27F8016E61A3E00B898FC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -156,10 +156,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		6DB27F7216E619AB00B898FC /* InfoPlist.strings */ = {
+		6DB27F9016E61A3E00B898FC /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				6DB27F7316E619AB00B898FC /* en */,
+				6DB27F9116E61A3E00B898FC /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -167,7 +167,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		6DB27F7616E619AB00B898FC /* Debug */ = {
+		6DB27F9416E61A3E00B898FC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -199,7 +199,7 @@
 			};
 			name = Debug;
 		};
-		6DB27F7716E619AB00B898FC /* Release */ = {
+		6DB27F9516E61A3E00B898FC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -224,26 +224,26 @@
 			};
 			name = Release;
 		};
-		6DB27F7916E619AB00B898FC /* Debug */ = {
+		6DB27F9716E61A3E00B898FC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "LL500px/LL500px-Prefix.pch";
-				INFOPLIST_FILE = "LL500px/LL500px-Info.plist";
+				GCC_PREFIX_HEADER = "LLUploader500px/LLUploader500px-Prefix.pch";
+				INFOPLIST_FILE = "LLUploader500px/LLUploader500px-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
-		6DB27F7A16E619AB00B898FC /* Release */ = {
+		6DB27F9816E61A3E00B898FC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "LL500px/LL500px-Prefix.pch";
-				INFOPLIST_FILE = "LL500px/LL500px-Info.plist";
+				GCC_PREFIX_HEADER = "LLUploader500px/LLUploader500px-Prefix.pch";
+				INFOPLIST_FILE = "LLUploader500px/LLUploader500px-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
@@ -253,24 +253,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6DB27F6116E619AA00B898FC /* Build configuration list for PBXProject "LL500px" */ = {
+		6DB27F7F16E61A3E00B898FC /* Build configuration list for PBXProject "LLUploader500px" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6DB27F7616E619AB00B898FC /* Debug */,
-				6DB27F7716E619AB00B898FC /* Release */,
+				6DB27F9416E61A3E00B898FC /* Debug */,
+				6DB27F9516E61A3E00B898FC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6DB27F7816E619AB00B898FC /* Build configuration list for PBXNativeTarget "LL500px" */ = {
+		6DB27F9616E61A3E00B898FC /* Build configuration list for PBXNativeTarget "LLUploader500px" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6DB27F7916E619AB00B898FC /* Debug */,
-				6DB27F7A16E619AB00B898FC /* Release */,
+				6DB27F9716E61A3E00B898FC /* Debug */,
+				6DB27F9816E61A3E00B898FC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 6DB27F5E16E619AA00B898FC /* Project object */;
+	rootObject = 6DB27F7C16E61A3E00B898FC /* Project object */;
 }
