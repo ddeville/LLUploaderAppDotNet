@@ -12,10 +12,10 @@
 
 @interface LLAppDotNetContext : NSObject
 
-- (void)authenticateWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret;
-- (void)authenticateWithOAuthToken:(NSString *)OAuthToken OAuthSecret:(NSString *)OAuthSecret;
+- (void)authenticateWithClientID:(NSString *)clientID passwordGrantSecret:(NSString *)passwordGrantSecret;
+- (void)authenticateWithUsername:(NSString *)username accessToken:(NSString *)accessToken;
 
 - (NSURLRequest *)requestOAuthTokenCredentialsWithUsername:(NSString *)username password:(NSString *)password;
-+ (BOOL)parseAuthenticationResponseWithProvider:(_RMUploadURLConnectionResponseProviderBlock)responseProvider OAuthToken:(NSString **)OAuthTokenRef OAuthSecret:(NSString **)OAuthSecretRef error:(NSError **)errorRef;
++ (NSString *)parseAuthenticationResponseWithProvider:(_RMUploadURLConnectionResponseProviderBlock)responseProvider username:(NSString **)username error:(NSError **)errorRef;
 
 @end

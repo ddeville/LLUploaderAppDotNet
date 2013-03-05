@@ -8,10 +8,14 @@
 
 #import "LLAppDotNetContext.h"
 
+#import "RMUploadKit/RMUploadKit+Private.h"
+
+#import "LLUploaderAppDotNet-Constants.h"
+
 @interface LLAppDotNetContext ()
 
-@property (copy, nonatomic) NSString *consumerKey, *consumerSecret;
-@property (copy, nonatomic) NSString *OAuthToken, *OAuthSecret;
+@property (copy, nonatomic) NSString *clientID, *passwordGrantSecret;
+@property (copy, nonatomic) NSString *username, *accessToken;
 
 @end
 
@@ -19,30 +23,30 @@
 
 - (void)dealloc
 {
-	[_consumerKey release];
-	[_consumerSecret release];
+	[_clientID release];
+	[_passwordGrantSecret release];
 	
-	[_OAuthToken release];
-	[_OAuthSecret release];
+	[_username release];
+	[_accessToken release];
 	
 	[super dealloc];
 }
 
 #pragma mark - Context authentication
 
-- (void)authenticateWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
+- (void)authenticateWithClientID:(NSString *)clientID passwordGrantSecret:(NSString *)passwordGrantSecret
 {
-	NSParameterAssert(consumerKey != nil);
-	NSParameterAssert(consumerSecret != nil);
+	NSParameterAssert(clientID != nil);
+	NSParameterAssert(passwordGrantSecret != nil);
 	
-	[self setConsumerKey:consumerKey];
-	[self setConsumerSecret:consumerSecret];
+	[self setClientID:clientID];
+	[self setPasswordGrantSecret:passwordGrantSecret];
 }
 
-- (void)authenticateWithOAuthToken:(NSString *)OAuthToken OAuthSecret:(NSString *)OAuthSecret
+- (void)authenticateWithUsername:(NSString *)username accessToken:(NSString *)accessToken;
 {
-	[self setOAuthToken:OAuthToken];
-	[self setOAuthSecret:OAuthSecret];
+	[self setUsername:username];
+	[self setAccessToken:accessToken];
 }
 
 #pragma mark - Authentication
@@ -52,29 +56,95 @@
 	NSParameterAssert(username != nil);
 	NSParameterAssert(password != nil);
 	
-//	NSParameterAssert([self _checkHasOAuthClientAuthentication]);
+	NSParameterAssert([self _checkHasOAuthClientAuthentication]);
 	
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
 	[request setHTTPMethod:@"POST"];
 	[request setURL:[NSURL URLWithString:@"https://alpha.app.net/oauth/access_token"]];
 	
-	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-	[parameters setObject:username forKey:@"x_auth_username"];
-	[parameters setObject:password forKey:@"x_auth_password"];
-	[parameters setObject:@"client_auth" forKey:@"x_auth_mode"];
+	NSDictionary *parameters = @{
+		@"grant_type" : @"password",
+		@"scrope" : @"basic",
+		@"client_id" : [self clientID],
+		@"password_grant_secret" : [self passwordGrantSecret],
+		@"username" : username,
+		@"password" : password,
+	};
 	[self _addBodyParameters:parameters toRequest:request];
 	
-	[self _addOAuthAuthenticationToRequest:request];
+//	[self _addOAuthAuthenticationToRequest:request];
 	
 	return request;
 }
 
-+ (BOOL)parseAuthenticationResponseWithProvider:(_RMUploadURLConnectionResponseProviderBlock)responseProvider OAuthToken:(NSString **)OAuthTokenRef OAuthSecret:(NSString **)OAuthSecretRef error:(NSError **)errorRef
++ (NSString *)parseAuthenticationResponseWithProvider:(_RMUploadURLConnectionResponseProviderBlock)responseProvider username:(NSString **)username error:(NSError **)errorRef
 {
-	return NO;
+	NSParameterAssert(username != nil);
+	
+	NSURLResponse *response = nil;
+	NSData *bodyData = responseProvider(&response, errorRef);
+	if (bodyData == nil) {
+		return nil;
+	}
+	
+//	if (![self _checkResponse:response bodyData:bodyData errorDescription:CannotSigninToTumblrErrorDescription() supplementaryErrorRecoverySuggestions:[self _authenticationResponseSupplementaryErrorRecoverySuggestionsMap] error:errorRef]) {
+//		return NO;
+//	}
+	
+	void (^returnUnexpectedError)(NSString *, NSError *) = ^ (NSString *description, NSError *underlyingError) {
+		if (errorRef != NULL) {
+			description = description ? : NSLocalizedStringFromTableInBundle(@"Couldn\u2019t sign in to App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected authentication error description");
+			NSMutableDictionary *errorInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+											  description, NSLocalizedDescriptionKey,
+											  RMLocalizedStringFromTableInBundle(@"An unexpected error occurred while signing in to App.net, please double check your username and password, and try again.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected authentication error recovery suggestion"), NSLocalizedRecoverySuggestionErrorKey,
+											  nil];
+			[errorInfo setValue:underlyingError forKey:NSUnderlyingErrorKey];
+			*errorRef = [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:LLUploaderAppDotNetUnknownError userInfo:errorInfo];
+		}
+	};
+	
+	if ([bodyData length] == 0) {
+		returnUnexpectedError(nil, nil);
+		return nil;
+	}
+	
+	NSError *deserializationError = nil;
+	id responseJSON = [NSJSONSerialization JSONObjectWithData:bodyData options:(NSJSONReadingOptions)0 error:&deserializationError];
+	if (responseJSON == nil) {
+		returnUnexpectedError(nil, deserializationError);
+		return nil;
+	}
+	
+	if (![responseJSON isKindOfClass:[NSDictionary class]]) {
+		returnUnexpectedError(nil, nil);
+		return nil;
+	}
+	
+	NSString *accessToken = [responseJSON objectForKey:@"access_token"];
+	if (accessToken == nil) {
+		NSString *errorDescription = [responseJSON objectForKey:@"error"];
+		returnUnexpectedError(errorDescription, nil);
+		return nil;
+	}
+	
+	*username = [responseJSON objectForKey:@"username"];
+	
+	return accessToken;
 }
 
 #pragma mark - Private
+
+- (BOOL)_checkHasOAuthClientAuthentication
+{
+	BOOL hasOAuthClientAuthentication = YES;
+	if (hasOAuthClientAuthentication) {
+		hasOAuthClientAuthentication = ([self clientID] != nil);
+	}
+	if (hasOAuthClientAuthentication) {
+		hasOAuthClientAuthentication = ([self passwordGrantSecret] != nil);
+	}
+	return hasOAuthClientAuthentication;
+}
 
 static NSString * const _LLAppDotNetContextApplicationFormURLEncodedMIMEType = @"application/x-www-form-urlencoded";
 

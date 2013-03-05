@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6D42B64C16E531FB00C96B4F /* LLUploaderAppDotNet.uploader */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLUploaderAppDotNet.uploader; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D42B64C16E531FB00C96B4F /* AppDotNet.uploader */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppDotNet.uploader; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D42B64F16E531FB00C96B4F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		6D42B65216E531FB00C96B4F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		6D42B65316E531FB00C96B4F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -80,7 +80,7 @@
 		6D42B64D16E531FB00C96B4F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6D42B64C16E531FB00C96B4F /* LLUploaderAppDotNet.uploader */,
+				6D42B64C16E531FB00C96B4F /* AppDotNet.uploader */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -190,7 +190,7 @@
 			);
 			name = LLUploaderAppDotNet;
 			productName = AppDotNet;
-			productReference = 6D42B64C16E531FB00C96B4F /* LLUploaderAppDotNet.uploader */;
+			productReference = 6D42B64C16E531FB00C96B4F /* AppDotNet.uploader */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -356,7 +356,7 @@
 					"-framework",
 					RMUploadKit,
 				);
-				PRODUCT_NAME = LLUploaderAppDotNet;
+				PRODUCT_NAME = AppDotNet;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = uploader;
 			};
@@ -380,7 +380,7 @@
 					"-framework",
 					RMUploadKit,
 				);
-				PRODUCT_NAME = LLUploaderAppDotNet;
+				PRODUCT_NAME = AppDotNet;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = uploader;
 			};

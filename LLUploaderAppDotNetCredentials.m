@@ -9,8 +9,7 @@
 #import "LLUploaderAppDotNetCredentials.h"
 
 static NSString * const _LLUploaderAppDotNetCredentialsUsernameKey = @"username";
-static NSString * const _LLUploaderAppDotNetCredentialsOAuthTokenKey = @"OAuthToken";
-static NSString * const _LLUploaderAppDotNetCredentialsOAuthSecretKey = @"OAuthSecret";
+static NSString * const _LLUploaderAppDotNetCredentialsAccessTokenKey = @"accessToken";
 
 @implementation LLUploaderAppDotNetCredentials
 
@@ -20,8 +19,7 @@ static NSString * const _LLUploaderAppDotNetCredentialsOAuthSecretKey = @"OAuthS
 	
 	if ([key isEqualToString:RMUploadCredentialsDirtyKey]) {
 		[keyPaths addObject:_LLUploaderAppDotNetCredentialsUsernameKey];
-		[keyPaths addObject:_LLUploaderAppDotNetCredentialsOAuthTokenKey];
-		[keyPaths addObject:_LLUploaderAppDotNetCredentialsOAuthSecretKey];
+		[keyPaths addObject:_LLUploaderAppDotNetCredentialsAccessTokenKey];
 	}
 	else if ([key isEqualToString:RMUploadCredentialsUserIdentifierKey]) {
 		[keyPaths addObject:_LLUploaderAppDotNetCredentialsUsernameKey];
@@ -39,9 +37,7 @@ static NSString * const _LLUploaderAppDotNetCredentialsOAuthSecretKey = @"OAuthS
 	}
 	
 	_username = [[values objectForKey:_LLUploaderAppDotNetCredentialsUsernameKey] copy];
-	
-	_OAuthToken = [[values objectForKey:_LLUploaderAppDotNetCredentialsOAuthTokenKey] copy];
-	_OAuthSecret = [[values objectForKey:_LLUploaderAppDotNetCredentialsOAuthSecretKey] copy];
+	_accessToken = [[values objectForKey:_LLUploaderAppDotNetCredentialsAccessTokenKey] copy];
 	
 	return self;
 }
@@ -49,9 +45,7 @@ static NSString * const _LLUploaderAppDotNetCredentialsOAuthSecretKey = @"OAuthS
 - (void)dealloc
 {
 	[_username release];
-	
-	[_OAuthToken release];
-	[_OAuthSecret release];
+	[_accessToken release];
 	
 	[super dealloc];
 }
@@ -64,9 +58,7 @@ static NSString * const _LLUploaderAppDotNetCredentialsOAuthSecretKey = @"OAuthS
 	[propertyListRepresentation setValue:superRepresentation forKey:@"super"];
 	
 	[propertyListRepresentation setValue:[self username] forKey:_LLUploaderAppDotNetCredentialsUsernameKey];
-	
-	[propertyListRepresentation setValue:[self OAuthToken] forKey:_LLUploaderAppDotNetCredentialsOAuthTokenKey];
-	[propertyListRepresentation setValue:[self OAuthSecret] forKey:_LLUploaderAppDotNetCredentialsOAuthSecretKey];
+	[propertyListRepresentation setValue:[self accessToken] forKey:_LLUploaderAppDotNetCredentialsAccessTokenKey];
 	
 	return propertyListRepresentation;
 }

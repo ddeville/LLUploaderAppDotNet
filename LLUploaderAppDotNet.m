@@ -14,17 +14,18 @@
 #import "LLUploaderAppDotNetCredentialsConfigurationViewController.h"
 #import "LLUploaderAppDotNetPresetConfigurationViewController.h"
 
-static NSString * const _LLUploaderAppDotNetConsumerKey = @"Vy3TT9w4eYAHvCnXEyfVqvXzKRn5GcLu";
-static NSString * const _LLUploaderAppDotNetConsumerSecret = @"vqHVnuKBGds8tGu9j9yJhM4KR3BuZaM4";
+static NSString * const _LLUploaderAppDotNetClientID = @"Vy3TT9w4eYAHvCnXEyfVqvXzKRn5GcLu";
+static NSString * const _LLUploaderAppDotNetClientSecret = @"vqHVnuKBGds8tGu9j9yJhM4KR3BuZaM4";
+static NSString * const _LLUploaderAppDotNetPasswordGrantSecret = @"3ATd9EtxSDpjQNakFhxnHrgs5HtPYYEg";
 
 @implementation LLUploaderAppDotNet
 
 + (void)authenticateContext:(LLAppDotNetContext *)context withCredentials:(LLUploaderAppDotNetCredentials *)credentials
 {
-	[context authenticateWithConsumerKey:_LLUploaderAppDotNetConsumerKey consumerSecret:_LLUploaderAppDotNetConsumerSecret];
+	[context authenticateWithClientID:_LLUploaderAppDotNetClientID passwordGrantSecret:_LLUploaderAppDotNetPasswordGrantSecret];
 	
 	if (credentials != nil) {
-		[context authenticateWithOAuthToken:[credentials OAuthToken] OAuthSecret:[credentials OAuthSecret]];
+		[context authenticateWithUsername:[credentials username] accessToken:[credentials accessToken]];
 	}
 }
 

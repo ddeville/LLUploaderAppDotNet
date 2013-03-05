@@ -13,6 +13,7 @@
 #import "RMFoundation/RMFoundation.h"
 #import "RMUploadKit/RMUploadKit+Private.h"
 
+#import "LLUploaderAppDotNet.h"
 #import "LLUploaderAppDotNetCredentials.h"
 #import "LLAppDotNetContext.h"
 
@@ -136,22 +137,23 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 	NSString *password = [[self passwordTextField] stringValue];
 	
 	LLAppDotNetContext *context = [[[LLAppDotNetContext alloc] init] autorelease];
+	[LLUploaderAppDotNet authenticateContext:context withCredentials:nil];
+	
 	NSURLRequest *authenticationRequest = [context requestOAuthTokenCredentialsWithUsername:username password:password];
 	
 	[self setAuthenticationConnection:[RMUploadURLConnection _connectionWithRequest:authenticationRequest responseProviderBlock:^ (_RMUploadURLConnectionResponseProviderBlock responseProvider) {
 		[self setAuthenticationConnection:nil];
 		
-		NSString *OAuthToken = nil, *OAuthSecret = nil;
-		
+		NSString *authenticationUsername = nil;
 		NSError *parseAuthenticationResponseError = nil;
-		BOOL parseAuthenticationResponse = [LLAppDotNetContext parseAuthenticationResponseWithProvider:responseProvider OAuthToken:&OAuthToken OAuthSecret:&OAuthSecret error:&parseAuthenticationResponseError];
-		if (!parseAuthenticationResponse) {
+		NSString *accessToken = [LLAppDotNetContext parseAuthenticationResponseWithProvider:responseProvider username:&authenticationUsername error:&parseAuthenticationResponseError];
+		if (accessToken == nil) {
 			[self _failWithError:parseAuthenticationResponseError];
 			return;
 		}
 		
-		[[self representedObject] setOAuthToken:OAuthToken];
-		[[self representedObject] setOAuthSecret:OAuthSecret];
+		[[self representedObject] setUsername:(authenticationUsername ? : username)];
+		[[self representedObject] setAccessToken:accessToken];
 		
 		[super nextStage:sender];
 	}]];

@@ -13,7 +13,6 @@
 @interface LLUploaderAppDotNetCredentials : RMUploadCredentials
 
 @property (copy, nonatomic) NSString *username;
-
-@property (copy, nonatomic) NSString *OAuthToken, *OAuthSecret;
+@property (copy, nonatomic) NSString *accessToken;
 
 @end
