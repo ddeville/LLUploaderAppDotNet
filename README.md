@@ -1,4 +1,4 @@
-LLAppDotNet
+LLUploaderAppDotNet
 ===========
 
-App.net plugin for Courier
+App.net uploader plugin for Courier.
