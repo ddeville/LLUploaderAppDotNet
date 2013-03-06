@@ -42,4 +42,9 @@
 	return acceptedTypes;
 }
 
+- (NSURL *)serviceURL
+{
+	return [[[NSURL alloc] initWithScheme:@"http" host:@"app.net" path:@"/"] autorelease];
+}
+
 @end

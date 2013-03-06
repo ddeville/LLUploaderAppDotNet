@@ -8,6 +8,7 @@
 
 #import "LLAppDotNetContext.h"
 
+#import "RMUploadKit/RMUploadKit.h"
 #import "RMUploadKit/RMUploadKit+Private.h"
 
 #import "LLUploaderAppDotNet-Constants.h"
@@ -167,14 +168,92 @@
 
 #pragma mark - Upload
 
-- (NSURLRequest *)requestUploadFileAtURL:(NSURL *)mediaLocation title:(NSString *)title description:(id)description error:(NSError **)errorRef
+- (NSURLRequest *)requestUploadFileAtURL:(NSURL *)fileLocation title:(NSString *)title description:(id)description error:(NSError **)errorRef
 {
-	return nil;
+	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
+	[request setHTTPMethod:@"POST"];
+	[request setURL:[NSURL URLWithString:@"https://alpha-api.app.net/stream/0/files"]];
+	
+	RMUploadMultipartFormDocument *fileDocument = [[[RMUploadMultipartFormDocument alloc] init] autorelease];
+	[fileDocument addFileByReferencingURL:fileLocation withFilename:[fileLocation lastPathComponent] toField:@"content"];
+	
+	/*
+	 "params": {
+	 "AWSAccessKeyId":		  "AKIAIDPUZISHSBEOFS6Q",
+	 "key":					 "items/qL/${filename}",
+	 "acl":					 "public-read",
+	 "success_action_redirect": "http://my.cl.ly/items/s3",
+	 "signature":			   "2vRWmaSy46WGs0MDUdLHAqjSL8k=",
+	 "policy":				  "loooongtext=="
+	 }
+	 */
+	
+//	[parameters enumerateKeysAndObjectsUsingBlock:^ (id key, id obj, BOOL *stop) {
+//		[fileDocument setValue:obj forField:key];
+//	}];
+	
+	[fileDocument setValue:@"com.example.test" forField:@"type"];
+	
+	[request setHTTPBodyDocument:fileDocument];
+	
+	[self _addAuthenticationToRequest:request];
+	
+	return request;
 }
 
 + (NSURL *)parseUploadFileResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef
 {
-	return nil;
+	NSURLResponse *response = nil;
+	NSData *bodyData = responseProvider(&response, errorRef);
+	if (bodyData == nil) {
+		return nil;
+	}
+	
+	void (^returnUnexpectedError)(NSError *) = ^ (NSError *underlyingError) {
+		if (errorRef != NULL) {
+			NSMutableDictionary *errorInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+											  NSLocalizedStringFromTableInBundle(@"Couldn\u2019t sign in to App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected authentication error description"), NSLocalizedDescriptionKey,
+											  NSLocalizedStringFromTableInBundle(@"An unexpected error occurred while signing in to App.net, please double check your username and password, and try again.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected authentication error recovery suggestion"), NSLocalizedRecoverySuggestionErrorKey,
+											  nil];
+			[errorInfo setValue:underlyingError forKey:NSUnderlyingErrorKey];
+			*errorRef = [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:LLUploaderAppDotNetUnknownError userInfo:errorInfo];
+		}
+	};
+	
+	if ([bodyData length] == 0) {
+		returnUnexpectedError(nil);
+		return nil;
+	}
+	
+	NSError *deserializationError = nil;
+	id responseJSON = [NSJSONSerialization JSONObjectWithData:bodyData options:(NSJSONReadingOptions)0 error:&deserializationError];
+	if (responseJSON == nil) {
+		returnUnexpectedError(deserializationError);
+		return nil;
+	}
+	
+	responseJSON = _LLAppDotNetContextCast(NSDictionary, responseJSON);
+	
+	id meta = _LLAppDotNetContextCast(NSDictionary, responseJSON[@"meta"]);
+	NSNumber *responseCode = _LLAppDotNetContextCast(NSNumber, meta[@"code"]) ;
+	if (responseCode == nil) {
+		returnUnexpectedError(nil);
+		return nil;
+	}
+	
+	if ([responseCode integerValue] != 200) {
+		returnUnexpectedError(nil);
+		return nil;
+	}
+	
+	id data = _LLAppDotNetContextCast(NSDictionary, responseJSON[@"data"]);
+	NSURL *URL = [NSURL URLWithString:_LLAppDotNetContextCast(NSString, data[@"url"])];
+	if (URL == nil) {
+		returnUnexpectedError(nil);
+		return nil;
+	}
+	
+	return URL;
 }
 
 #pragma mark - Response (Private)
