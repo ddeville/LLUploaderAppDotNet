@@ -11,8 +11,6 @@
 #import "LLUploaderAppDotNetCredentials.h"
 #import "LLUploaderAppDotNetUploadTask.h"
 
-#import "LLUploaderAppDotNet-Constants.h"
-
 @implementation LLUploaderAppDotNetPreset
 
 @dynamic authentication;
@@ -22,9 +20,9 @@
 	return @"App.net";
 }
 
-+ (NSImage *)icon
++ (NSString *)iconResource
 {
-	return [[[NSImage alloc] initWithContentsOfURL:[[NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier] URLForImageResource:@"app_dot_net"]] autorelease];
+	return @"ADN";
 }
 
 + (Class)uploadTaskClass
@@ -35,6 +33,13 @@
 + (Class)credentialsClass
 {
 	return [LLUploaderAppDotNetCredentials class];
+}
+
+- (NSSet *)acceptedTypes
+{
+	NSMutableSet *acceptedTypes = [NSMutableSet setWithSet:[super acceptedTypes]];
+	[acceptedTypes addObject:(id)kUTTypeData];
+	return acceptedTypes;
 }
 
 @end

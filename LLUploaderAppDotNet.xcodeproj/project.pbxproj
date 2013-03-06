@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D350F4B16E7E22900DEC7BE /* ADN.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 6D350F4A16E7E22900DEC7BE /* ADN.tiff */; };
 		6D42B65016E531FB00C96B4F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D42B64F16E531FB00C96B4F /* Cocoa.framework */; };
 		6D42B69C16E5359000C96B4F /* LLAppDotNetContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B69B16E5359000C96B4F /* LLAppDotNetContext.m */; };
 		6D42B6A216E535CF00C96B4F /* LLUploaderAppDotNet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B6A116E535CF00C96B4F /* LLUploaderAppDotNet.m */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6D350F4A16E7E22900DEC7BE /* ADN.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ADN.tiff; sourceTree = SOURCE_ROOT; };
 		6D42B64C16E531FB00C96B4F /* AppDotNet.uploader */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppDotNet.uploader; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D42B64F16E531FB00C96B4F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		6D42B65216E531FB00C96B4F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -120,6 +122,7 @@
 			children = (
 				6D42B69716E534CF00C96B4F /* Info.plist */,
 				6D42B69516E534CF00C96B4F /* InfoPlist.strings */,
+				6D350F4A16E7E22900DEC7BE /* ADN.tiff */,
 			);
 			name = Resources;
 			path = AppDotNet;
@@ -228,6 +231,7 @@
 				6D42B6F316E5441300C96B4F /* InfoPlist.strings in Resources */,
 				6D42B72C16E5561E00C96B4F /* LLUploaderAppDotNetCredentialsConfigurationView.xib in Resources */,
 				6D42B72F16E5562400C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib in Resources */,
+				6D350F4B16E7E22900DEC7BE /* ADN.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
-	<string>app_dot_net</string>
+	<string>ADN.tiff</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.lickalemon.uploader.appdotnet</string>
 	<key>CFBundleInfoDictionaryVersion</key>
