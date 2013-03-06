@@ -177,21 +177,6 @@
 	RMUploadMultipartFormDocument *fileDocument = [[[RMUploadMultipartFormDocument alloc] init] autorelease];
 	[fileDocument addFileByReferencingURL:fileLocation withFilename:[fileLocation lastPathComponent] toField:@"content"];
 	
-	/*
-	 "params": {
-	 "AWSAccessKeyId":		  "AKIAIDPUZISHSBEOFS6Q",
-	 "key":					 "items/qL/${filename}",
-	 "acl":					 "public-read",
-	 "success_action_redirect": "http://my.cl.ly/items/s3",
-	 "signature":			   "2vRWmaSy46WGs0MDUdLHAqjSL8k=",
-	 "policy":				  "loooongtext=="
-	 }
-	 */
-	
-//	[parameters enumerateKeysAndObjectsUsingBlock:^ (id key, id obj, BOOL *stop) {
-//		[fileDocument setValue:obj forField:key];
-//	}];
-	
 	[fileDocument setValue:@"com.example.test" forField:@"type"];
 	
 	[request setHTTPBodyDocument:fileDocument];
@@ -209,11 +194,16 @@
 		return nil;
 	}
 	
+//	BOOL responseOK = [self _checkResponse:response bodyData:bodyData error:errorRef];
+//	if (!responseOK) {
+//		return nil;
+//	}
+	
 	void (^returnUnexpectedError)(NSError *) = ^ (NSError *underlyingError) {
 		if (errorRef != NULL) {
 			NSMutableDictionary *errorInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-											  NSLocalizedStringFromTableInBundle(@"Couldn\u2019t sign in to App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected authentication error description"), NSLocalizedDescriptionKey,
-											  NSLocalizedStringFromTableInBundle(@"An unexpected error occurred while signing in to App.net, please double check your username and password, and try again.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected authentication error recovery suggestion"), NSLocalizedRecoverySuggestionErrorKey,
+											  NSLocalizedStringFromTableInBundle(@"Couldn\u2019t upload to App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected upload error description"), NSLocalizedDescriptionKey,
+											  NSLocalizedStringFromTableInBundle(@"An unexpected App.net error has occurred. Please try again.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected app.net error recovery suggestion"), NSLocalizedRecoverySuggestionErrorKey,
 											  nil];
 			[errorInfo setValue:underlyingError forKey:NSUnderlyingErrorKey];
 			*errorRef = [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:LLUploaderAppDotNetUnknownError userInfo:errorInfo];
@@ -234,8 +224,8 @@
 	
 	responseJSON = _LLAppDotNetContextCast(NSDictionary, responseJSON);
 	
-	id meta = _LLAppDotNetContextCast(NSDictionary, responseJSON[@"meta"]);
-	NSNumber *responseCode = _LLAppDotNetContextCast(NSNumber, meta[@"code"]) ;
+	id responseMeta = _LLAppDotNetContextCast(NSDictionary, responseJSON[@"meta"]);
+	NSNumber *responseCode = _LLAppDotNetContextCast(NSNumber, responseMeta[@"code"]) ;
 	if (responseCode == nil) {
 		returnUnexpectedError(nil);
 		return nil;
@@ -246,8 +236,8 @@
 		return nil;
 	}
 	
-	id data = _LLAppDotNetContextCast(NSDictionary, responseJSON[@"data"]);
-	NSURL *URL = [NSURL URLWithString:_LLAppDotNetContextCast(NSString, data[@"url"])];
+	id responseData = _LLAppDotNetContextCast(NSDictionary, responseJSON[@"data"]);
+	NSURL *URL = [NSURL URLWithString:_LLAppDotNetContextCast(NSString, responseData[@"url"])];
 	if (URL == nil) {
 		returnUnexpectedError(nil);
 		return nil;
