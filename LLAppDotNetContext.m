@@ -85,7 +85,7 @@
 	return request;
 }
 
-+ (NSString *)parseAuthenticationResponseWithProvider:(_RMUploadURLConnectionResponseProviderBlock)responseProvider username:(NSString **)username error:(NSError **)errorRef
++ (NSString *)parseAuthenticationResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider username:(NSString **)username error:(NSError **)errorRef
 {
 	NSParameterAssert(username != nil);
 	
@@ -163,6 +163,18 @@
 	 */
 	NSString *authenticationHeaderValue = [NSString stringWithFormat:@"%@ %@", _LLAppDotNetContextAuthenticationTokenTypeKey, [self accessToken]];
 	[request setValue:authenticationHeaderValue forHTTPHeaderField:_LLAppDotNetContextHTTPHeaderFieldAuthorization];
+}
+
+#pragma mark - Upload
+
+- (NSURLRequest *)requestUploadFileAtURL:(NSURL *)mediaLocation title:(NSString *)title description:(id)description error:(NSError **)errorRef
+{
+	return nil;
+}
+
++ (NSURL *)parseUploadFileResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef
+{
+	return nil;
 }
 
 #pragma mark - Response (Private)
