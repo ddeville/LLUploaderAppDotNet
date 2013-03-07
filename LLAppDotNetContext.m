@@ -231,10 +231,10 @@
 		return nil;
 	}
 	
-//	BOOL responseOK = [self _checkResponse:response bodyData:bodyData error:errorRef];
-//	if (!responseOK) {
-//		return nil;
-//	}
+	BOOL responseOK = [self _checkResponse:response bodyData:bodyData error:errorRef];
+	if (!responseOK) {
+		return nil;
+	}
 	
 	void (^returnUnexpectedError)(NSError *) = ^ (NSError *underlyingError) {
 		if (errorRef != NULL) {
@@ -259,9 +259,10 @@
 		return nil;
 	}
 	
-	responseJSON = _LLAppDotNetContextCast(NSDictionary, responseJSON);
+	NSDictionary *responseDocument = _LLAppDotNetContextCast(NSDictionary, responseJSON);
 	
-	id responseMeta = _LLAppDotNetContextCast(NSDictionary, responseJSON[@"meta"]);
+	NSDictionary *responseMeta = _LLAppDotNetContextCast(NSDictionary, responseDocument[@"meta"]);
+	
 	NSNumber *responseCode = _LLAppDotNetContextCast(NSNumber, responseMeta[@"code"]) ;
 	if (responseCode == nil) {
 		returnUnexpectedError(nil);
@@ -273,7 +274,13 @@
 		return nil;
 	}
 	
-	id responseData = _LLAppDotNetContextCast(NSDictionary, responseJSON[@"data"]);
+	NSDictionary *responseData = _LLAppDotNetContextCast(NSDictionary, responseDocument[@"data"]);
+	
+	NSURL *permanentURL = [NSURL URLWithString:_LLAppDotNetContextCast(NSString, responseData[@"url_permanent"])];
+	if (permanentURL != nil) {
+		return permanentURL;
+	}
+	
 	NSURL *URL = [NSURL URLWithString:_LLAppDotNetContextCast(NSString, responseData[@"url"])];
 	if (URL == nil) {
 		returnUnexpectedError(nil);
