@@ -166,19 +166,55 @@
 
 #pragma mark - Upload
 
-- (NSURLRequest *)requestUploadFileAtURL:(NSURL *)fileLocation title:(NSString *)title description:(id)description error:(NSError **)errorRef
+- (NSURLRequest *)requestUploadFileAtURL:(NSURL *)fileLocation title:(NSString *)title description:(id)description tags:(NSArray *)tags privacy:(LLUploaderAppDotNetPresetPrivacy)privacy error:(NSError **)errorRef
 {
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
 	[request setHTTPMethod:@"POST"];
 	[request setURL:[NSURL URLWithString:@"https://alpha-api.app.net/stream/0/files"]];
 	
 	RMUploadMultipartFormDocument *fileDocument = [[[RMUploadMultipartFormDocument alloc] init] autorelease];
+	
+	/*
+		File content
+	 */
 	[fileDocument addFileByReferencingURL:fileLocation withFilename:[fileLocation lastPathComponent] toField:@"content"];
 	
 	/*
-		We specifically use the main bundle here so that it picks the hosting application.
+		Metadata
 	 */
-	[fileDocument setValue:[[NSBundle mainBundle] bundleIdentifier] forField:@"type"];
+	NSString *hostApplicationType = [[NSBundle mainBundle] bundleIdentifier];
+	
+	[fileDocument setValue:hostApplicationType forField:@"type"];
+	[fileDocument setValue:title forField:@"name"];
+	[fileDocument setValue:[(privacy == LLUploaderAppDotNetPresetPrivacyPublic ? @YES : @NO) stringValue] forField:@"public"];
+	
+	/*
+		Annotations
+	 */
+#if 0
+	NSString *hostApplicationDescriptionType = [hostApplicationType stringByAppendingKeyPath:@"description"];
+	NSString *hostApplicationTagsType = [hostApplicationType stringByAppendingKeyPath:@"tags"];
+	
+	NSMutableArray *annotations = [NSMutableArray array];
+	if (description != nil) {
+		NSDictionary *descriptionAnnotation = @{
+			@"type" : hostApplicationDescriptionType,
+			@"value" : description,
+		};
+		[annotations addObject:descriptionAnnotation];
+	}
+	if (tags != nil) {
+		NSDictionary *tagsAnnotation = @{
+			@"type" : hostApplicationTagsType,
+			@"value" : tags,
+		};
+		[annotations addObject:tagsAnnotation];
+	}
+	
+	NSData *annotationsJSONData = [NSJSONSerialization dataWithJSONObject:annotations options:(NSJSONWritingOptions)0 error:NULL];
+	NSString *annotationsJSONString = [[NSString alloc] initWithData:annotationsJSONData encoding:NSUTF8StringEncoding];
+	[fileDocument setValue:annotationsJSONString forField:@"annotations"];
+#endif
 	
 	[request setHTTPBodyDocument:fileDocument];
 	

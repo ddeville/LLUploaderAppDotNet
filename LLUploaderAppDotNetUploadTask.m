@@ -60,11 +60,14 @@
 
 - (void)_continueUpload
 {
-	NSURL *mediaLocation = [[self uploadInfo] valueForKey:RMUploadFileURLKey];
-	id description = ([[self uploadInfo] valueForKey:_RMUploadFileAttributedDescriptionKey] ? : [[self uploadInfo] valueForKey:RMUploadFileDescriptionKey]);
+	NSURL *fileURL = [[self uploadInfo] valueForKey:RMUploadFileURLKey];
+	NSString *title = [[self uploadInfo] valueForKey:RMUploadFileTitleKey];
+	id description = [[self uploadInfo] valueForKey:RMUploadFileDescriptionKey];
+	NSArray *tags = [[self uploadInfo] valueForKey:RMUploadFileTagsKey];
+	LLUploaderAppDotNetPresetPrivacy privacy = [[self destination] privacy];
 	
 	NSError *requestUploadError = nil;
-	NSURLRequest *requestUpload = [[self context] requestUploadFileAtURL:mediaLocation title:[[self uploadInfo] valueForKey:RMUploadFileTitleKey] description:description error:&requestUploadError];
+	NSURLRequest *requestUpload = [[self context] requestUploadFileAtURL:fileURL title:title description:description tags:tags privacy:privacy error:&requestUploadError];
 	if (requestUpload == nil) {
 		[self _failWithError:requestUploadError];
 		return;
