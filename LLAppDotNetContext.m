@@ -73,15 +73,13 @@
 	
 	NSDictionary *parameters = @{
 		@"grant_type" : @"password",
-		@"scrope" : @"basic",
+		@"scope" : @"basic",
 		@"client_id" : [self clientID],
 		@"password_grant_secret" : [self passwordGrantSecret],
 		@"username" : username,
 		@"password" : password,
 	};
 	[self _addBodyParameters:parameters toRequest:request];
-	
-//	[self _addOAuthAuthenticationToRequest:request];
 	
 	return request;
 }
@@ -177,7 +175,10 @@
 	RMUploadMultipartFormDocument *fileDocument = [[[RMUploadMultipartFormDocument alloc] init] autorelease];
 	[fileDocument addFileByReferencingURL:fileLocation withFilename:[fileLocation lastPathComponent] toField:@"content"];
 	
-	[fileDocument setValue:@"com.example.test" forField:@"type"];
+	/*
+		We specifically use the main bundle here so that it picks the hosting application.
+	 */
+	[fileDocument setValue:[[NSBundle mainBundle] bundleIdentifier] forField:@"type"];
 	
 	[request setHTTPBodyDocument:fileDocument];
 	

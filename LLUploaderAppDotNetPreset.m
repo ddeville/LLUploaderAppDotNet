@@ -11,6 +11,8 @@
 #import "LLUploaderAppDotNetCredentials.h"
 #import "LLUploaderAppDotNetUploadTask.h"
 
+NSString * const LLUploaderAppDotNetPresetPrivacyKey = @"privacy";
+
 @implementation LLUploaderAppDotNetPreset
 
 @dynamic authentication;
@@ -33,6 +35,52 @@
 + (Class)credentialsClass
 {
 	return [LLUploaderAppDotNetCredentials class];
+}
+
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key
+{
+	NSMutableSet *keyPaths = [NSMutableSet setWithSet:[super keyPathsForValuesAffectingValueForKey:key]];
+	
+	if ([key isEqualToString:RMUploadPresetDirtyKey]) {
+		[keyPaths addObject:LLUploaderAppDotNetPresetPrivacyKey];
+	}
+	
+	return keyPaths;
+}
+
+- (id)initWithPropertyListRepresentation:(id)values
+{
+	id superRepresentation = [values objectForKey:@"super"];
+	self = [super initWithPropertyListRepresentation:superRepresentation];
+	if (self == nil) {
+		return nil;
+	}
+	
+	[self setValue:[values valueForKey:LLUploaderAppDotNetPresetPrivacyKey] forKey:LLUploaderAppDotNetPresetPrivacyKey];
+	
+	return self;
+}
+
+- (id)propertyListRepresentation
+{
+	id superRepresentation = [super propertyListRepresentation];
+	
+	NSMutableDictionary *plist = [NSMutableDictionary dictionary];
+	[plist setObject:superRepresentation forKey:@"super"];
+	
+	[plist setValue:@([self privacy]) forKey:LLUploaderAppDotNetPresetPrivacyKey];
+	
+	return plist;
+}
+
+- (void)setNilValueForKey:(NSString *)key
+{
+	if ([key isEqualToString:LLUploaderAppDotNetPresetPrivacyKey]) {
+		[self setValue:@(LLUploaderAppDotNetPresetPrivacyPublic) forKey:LLUploaderAppDotNetPresetPrivacyKey];
+	}
+	else {
+		[super setNilValueForKey:key];
+	}
 }
 
 - (NSSet *)acceptedTypes

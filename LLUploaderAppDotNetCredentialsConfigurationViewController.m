@@ -22,13 +22,6 @@
 static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControllerAuthenticatingKey = @"authenticating";
 static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControllerAuthenticationConnectionKey = @"authenticationConnection";
 
-@interface LLUploaderAppDotNetCredentialsConfigurationViewController (/* User interface */)
-
-@property (assign, nonatomic) IBOutlet NSTextField *usernameTextField;
-@property (assign, nonatomic) IBOutlet NSSecureTextField *passwordTextField;
-
-@end
-
 @interface LLUploaderAppDotNetCredentialsConfigurationViewController (/* Private */)
 
 @property (readwrite, nonatomic) BOOL authenticating;

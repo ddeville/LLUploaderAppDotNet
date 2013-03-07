@@ -12,8 +12,16 @@
 
 #import "LLUploaderAppDotNetCredentials.h"
 
+typedef NS_ENUM(NSInteger, LLUploaderAppDotNetPresetPrivacy) {
+	LLUploaderAppDotNetPresetPrivacyPublic = 1,
+	LLUploaderAppDotNetPresetPrivacyPrivate = 2,
+};
+
 @interface LLUploaderAppDotNetPreset : RMUploadPreset
 
 @property (readonly, assign, nonatomic) LLUploaderAppDotNetCredentials *authentication;
+
+extern NSString * const LLUploaderAppDotNetPresetPrivacyKey;
+@property (assign, nonatomic) LLUploaderAppDotNetPresetPrivacy privacy;
 
 @end
