@@ -255,9 +255,26 @@
 		return YES;
 	}
 	
-	if (errorRef != NULL) {
-#warning Create error here!
+	if (errorRef == NULL) {
+		return NO;
 	}
+	
+	NSDictionary *statusCodeToRecoverySuggestionMap = @{
+		@(400) : NSLocalizedStringFromTableInBundle(@"", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @""),
+		@(413) : NSLocalizedStringFromTableInBundle(@"This file is too large for App.net. Please visit the App.net support page for information about size limits.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext file too large error recovery suggestion"),
+		@(507) : NSLocalizedStringFromTableInBundle(@"You don\u2019t have enough space in your App.net Files storage for this file. Please upgrade your account or delete some file from your Files storage.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext insufficient storage error recovery suggestion"),
+	};
+	
+	NSString *recoverySuggestion = statusCodeToRecoverySuggestionMap[@(statusCode)];
+	if (recoverySuggestion == nil) {
+		recoverySuggestion = NSLocalizedStringFromTableInBundle(@"", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"");
+	}
+	
+	NSDictionary *errorInfo = @{
+		NSLocalizedDescriptionKey : @"",
+		NSLocalizedRecoveryOptionsErrorKey : recoverySuggestion,
+	};
+	*errorRef = [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:0 userInfo:errorInfo];
 	
 	return NO;
 }
