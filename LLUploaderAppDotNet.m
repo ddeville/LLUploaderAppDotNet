@@ -20,13 +20,19 @@ static NSString * const _LLUploaderAppDotNetPasswordGrantSecret = @"3ATd9EtxSDpj
 
 @implementation LLUploaderAppDotNet
 
-+ (void)authenticateContext:(LLAppDotNetContext *)context withCredentials:(LLUploaderAppDotNetCredentials *)credentials
++ (BOOL)authenticateContext:(LLAppDotNetContext *)context withCredentials:(LLUploaderAppDotNetCredentials *)credentials error:(NSError **)errorRef
 {
 	[context authenticateWithClientID:_LLUploaderAppDotNetClientID passwordGrantSecret:_LLUploaderAppDotNetPasswordGrantSecret];
 	
 	if (credentials != nil) {
-		[context authenticateWithUsername:[credentials username] accessToken:[credentials accessToken]];
+		NSString *accessToken = [LLUploaderAppDotNetCredentials accessTokenForCredentials:credentials error:errorRef];
+		if (accessToken == nil) {
+			return NO;
+		}
+		[context authenticateWithUsername:[credentials username] accessToken:accessToken];
 	}
+	
+	return YES;
 }
 
 - (RMUploadPresetConfigurationViewController *)credentialsConfigurationViewControllerForCredentials:(RMUploadCredentials *)credentials

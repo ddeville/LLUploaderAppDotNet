@@ -41,7 +41,14 @@
 - (void)upload
 {
 	LLAppDotNetContext *context = [[[LLAppDotNetContext alloc] init] autorelease];
-	[LLUploaderAppDotNet authenticateContext:context withCredentials:[[self destination] authentication]];
+	
+	NSError *authenticationError = nil;
+	BOOL authenticated = [LLUploaderAppDotNet authenticateContext:context withCredentials:[[self destination] authentication] error:&authenticationError];
+	if (!authenticated) {
+		[self _failWithError:authenticationError];
+		return;
+	}
+	
 	[self setContext:context];
 	
 	[self _continueUpload];

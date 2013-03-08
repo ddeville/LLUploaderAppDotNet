@@ -13,6 +13,8 @@
 @interface LLUploaderAppDotNetCredentials : RMUploadCredentials
 
 @property (copy, nonatomic) NSString *username;
-@property (copy, nonatomic) NSString *accessToken;
+
++ (NSString *)accessTokenForCredentials:(LLUploaderAppDotNetCredentials *)credentials error:(NSError **)errorRef;
++ (BOOL)setAccessToken:(NSString *)accessToken forCredentials:(LLUploaderAppDotNetCredentials *)credentials error:(NSError **)errorRef;
 
 @end

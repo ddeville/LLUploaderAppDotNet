@@ -14,6 +14,6 @@
 
 @interface LLUploaderAppDotNet : RMUploadPlugin
 
-+ (void)authenticateContext:(LLAppDotNetContext *)context withCredentials:(LLUploaderAppDotNetCredentials *)credentials;
++ (BOOL)authenticateContext:(LLAppDotNetContext *)context withCredentials:(LLUploaderAppDotNetCredentials *)credentials error:(NSError **)errorRef;
 
 @end

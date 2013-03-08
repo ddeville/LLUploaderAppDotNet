@@ -130,7 +130,7 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 	NSString *password = [[self passwordTextField] stringValue];
 	
 	LLAppDotNetContext *context = [[[LLAppDotNetContext alloc] init] autorelease];
-	[LLUploaderAppDotNet authenticateContext:context withCredentials:nil];
+	[LLUploaderAppDotNet authenticateContext:context withCredentials:nil error:NULL];
 	
 	NSURLRequest *authenticationRequest = [context requestOAuthTokenCredentialsWithUsername:username password:password];
 	
@@ -146,7 +146,13 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 		}
 		
 		[[self representedObject] setUsername:(authenticationUsername ? : username)];
-		[[self representedObject] setAccessToken:accessToken];
+		
+		NSError *saveAccessTokenError = nil;
+		BOOL saveAccessToken = [LLUploaderAppDotNetCredentials setAccessToken:accessToken forCredentials:[self representedObject] error:&saveAccessTokenError];
+		if (!saveAccessToken) {
+			[self _failWithError:saveAccessTokenError];
+			return;
+		}
 		
 		[super nextStage:sender];
 	}]];
