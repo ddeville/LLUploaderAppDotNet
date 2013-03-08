@@ -94,15 +94,10 @@
 		return nil;
 	}
 	
-	if (![self _checkResponse:response bodyData:bodyData error:errorRef]) {
-		return nil;
-	}
-	
-	void (^returnUnexpectedError)(NSString *, NSError *) = ^ (NSString *description, NSError *underlyingError) {
+	void (^returnUnexpectedError)(NSError *) = ^ (NSError *underlyingError) {
 		if (errorRef != NULL) {
-			description = description ? : NSLocalizedStringFromTableInBundle(@"Couldn\u2019t sign in to App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected authentication error description");
 			NSMutableDictionary *errorInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-											  description, NSLocalizedDescriptionKey,
+											  NSLocalizedStringFromTableInBundle(@"Couldn\u2019t sign in to App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected authentication error description"), NSLocalizedDescriptionKey,
 											  NSLocalizedStringFromTableInBundle(@"An unexpected error occurred while signing in to App.net, please double check your username and password, and try again.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected authentication error recovery suggestion"), NSLocalizedRecoverySuggestionErrorKey,
 											  nil];
 			[errorInfo setValue:underlyingError forKey:NSUnderlyingErrorKey];
@@ -111,14 +106,14 @@
 	};
 	
 	if ([bodyData length] == 0) {
-		returnUnexpectedError(nil, nil);
+		returnUnexpectedError(nil);
 		return nil;
 	}
 	
 	NSError *deserializationError = nil;
 	id responseJSON = [NSJSONSerialization JSONObjectWithData:bodyData options:(NSJSONReadingOptions)0 error:&deserializationError];
 	if (responseJSON == nil) {
-		returnUnexpectedError(nil, deserializationError);
+		returnUnexpectedError(deserializationError);
 		return nil;
 	}
 	
@@ -127,7 +122,19 @@
 	NSString *accessToken = [responseJSON objectForKey:@"access_token"];
 	if (accessToken == nil) {
 		NSString *errorDescription = [responseJSON objectForKey:@"error"];
-		returnUnexpectedError(errorDescription, nil);
+		if (errorDescription == nil) {
+			returnUnexpectedError(nil);
+			return nil;
+		}
+		
+		if (errorRef != NULL) {
+			NSDictionary *errorInfo = @{
+				NSLocalizedDescriptionKey : errorDescription,
+				NSLocalizedRecoverySuggestionErrorKey : NSLocalizedStringFromTableInBundle(@"Your App.net sign-in details were incorrect, please reenter them and try again.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext invalid credentials error recovery suggestion")
+			};
+			*errorRef = [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:LLUploaderAppDotNetErrorCodeInvalidCredentials userInfo:errorInfo];
+		}
+		
 		return nil;
 	}
 	

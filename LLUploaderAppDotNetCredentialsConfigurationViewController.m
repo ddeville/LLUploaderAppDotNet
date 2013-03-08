@@ -164,7 +164,7 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 {
 	if ([[error domain] isEqualToString:LLUploaderAppDotNetErrorDomain] && [error code] == LLUploaderAppDotNetErrorCodeInvalidCredentials) {
 		RMErrorRecoveryAttempter *recoveryAttempter = [[[RMErrorRecoveryAttempter alloc] init] autorelease];
-		[recoveryAttempter addRecoveryOptionWithLocalizedTitle:NSLocalizedStringFromTableInBundle(@"Sign In", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderTumblrCredentialsViewController blank password sign in error recovery suggestion") recoveryBlock:^ (NSError *recoveryError) {
+		[recoveryAttempter addRecoveryOptionWithLocalizedTitle:NSLocalizedStringFromTableInBundle(@"Sign In", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderAppDotNetCredentialsViewController blank password sign in error recovery suggestion") recoveryBlock:^ (NSError *recoveryError) {
 			NSError *signInError = [NSError errorWithDomain:RMUploadKitBundleIdentifier code:RMUploadCredentialsErrorRequiresReauthentication userInfo:nil];
 			
 			NSDictionary *notificationInfo = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -173,7 +173,7 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 			[[NSNotificationCenter defaultCenter] postNotificationName:RMUploadPresetConfigurationViewControllerDidCompleteNotificationName object:self userInfo:notificationInfo];
 			return NO;
 		}];
-		[recoveryAttempter addRecoveryOptionWithLocalizedTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderTumblrCredentialsViewController blank password close error recovery suggestion") recoveryBlock:^ (NSError *recoveryError) {
+		[recoveryAttempter addRecoveryOptionWithLocalizedTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderAppDotNetCredentialsViewController blank password close error recovery suggestion") recoveryBlock:^ (NSError *recoveryError) {
 			NSError *cancelledError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
 			
 			NSDictionary *notificationInfo = [NSDictionary dictionaryWithObjectsAndKeys:
