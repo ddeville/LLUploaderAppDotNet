@@ -73,8 +73,6 @@ static inline NSString *_LLUploaderAppDotNetOAuthServiceName(void) {
 	return [LLUploaderAppDotNetBundleIdentifier stringByAppendingKeyPath:@"oauth-access-token"];
 }
 
-static NSString * const _LLUploaderAppDotNetServiceName = @"App.net";
-
 + (NSString *)accessTokenForCredentials:(LLUploaderAppDotNetCredentials *)credentials error:(NSError **)errorRef
 {
 	RMGenericKeychainItem *keychainItem = [self _findKeychainItemForUsername:[credentials username] serviceName:_LLUploaderAppDotNetOAuthServiceName() includePassword:YES error:errorRef];
