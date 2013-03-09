@@ -27,6 +27,11 @@ NSString * const LLUploaderAppDotNetPresetPrivacyKey = @"privacy";
 	return @"ADN";
 }
 
++ (NSString *)_freestandingIconResource
+{
+	return @"ADN_rounded";
+}
+
 + (Class)uploadTaskClass
 {
 	return [LLUploaderAppDotNetUploadTask class];
