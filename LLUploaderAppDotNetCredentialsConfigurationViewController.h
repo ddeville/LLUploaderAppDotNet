@@ -18,6 +18,6 @@
 @property (assign, nonatomic) IBOutlet NSSecureTextField *passwordTextField;
 
 @property (copy, nonatomic) NSString *password;
-@property (readonly, getter = isAuthenticating, nonatomic) BOOL authenticating;
+@property (readonly, assign, getter = isAuthenticating, nonatomic) BOOL authenticating;
 
 @end

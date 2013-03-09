@@ -24,7 +24,7 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 
 @interface LLUploaderAppDotNetCredentialsConfigurationViewController (/* Private */)
 
-@property (readwrite, nonatomic) BOOL authenticating;
+@property (readwrite, assign, nonatomic) BOOL authenticating;
 
 @property (retain, nonatomic) RMUploadURLConnection *authenticationConnection;
 
