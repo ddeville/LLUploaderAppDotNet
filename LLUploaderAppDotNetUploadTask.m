@@ -42,8 +42,6 @@
 
 - (void)upload
 {
-	NSLog(@"%@", [[self uploadInfo] metadata]);
-	
 	LLAppDotNetContext *context = [[[LLAppDotNetContext alloc] init] autorelease];
 	
 	NSError *authenticationError = nil;

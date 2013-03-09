@@ -10,10 +10,6 @@
 
 #import "LLUploaderAppDotNet-Constants.h"
 
-@interface LLUploaderAppDotNetMetadataViewController ()
-
-@end
-
 @implementation LLUploaderAppDotNetMetadataViewController
 
 - (id)init
@@ -24,6 +20,26 @@
 - (void)loadView
 {
 	[super loadView];
+}
+
+- (void)controlTextDidChange:(NSNotification *)notification
+{
+	if ([notification object] != [self postTextField]) {
+		return;
+	}
+	
+	NSUInteger characterCount = [[[self postTextField] stringValue] length];
+	
+	if (characterCount > 256) {
+		NSString *truncatedStringValue = [[[self postTextField] stringValue] substringToIndex:256];
+		[[self postTextField] setStringValue:truncatedStringValue];
+		
+		characterCount = 256;
+	}
+	
+	characterCount = fmax(256 - characterCount, 0) ;
+	
+	[[self postCharactersCountTextField] setStringValue:[NSString stringWithFormat:@"%lu", characterCount]];
 }
 
 @end
