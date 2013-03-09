@@ -20,6 +20,8 @@
 - (void)loadView
 {
 	[super loadView];
+	
+	[self _updateCharactersCount];
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification
@@ -29,14 +31,17 @@
 	}
 	
 	NSUInteger characterCount = [[[self postTextField] stringValue] length];
-	
 	if (characterCount > 256) {
 		NSString *truncatedStringValue = [[[self postTextField] stringValue] substringToIndex:256];
 		[[self postTextField] setStringValue:truncatedStringValue];
-		
-		characterCount = 256;
 	}
 	
+	[self _updateCharactersCount];
+}
+
+- (void)_updateCharactersCount
+{
+	NSUInteger characterCount = [[[self postTextField] stringValue] length];
 	characterCount = fmax(256 - characterCount, 0) ;
 	
 	[[self postCharactersCountTextField] setStringValue:[NSString stringWithFormat:@"%lu", characterCount]];
