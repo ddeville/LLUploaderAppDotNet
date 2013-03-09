@@ -13,6 +13,7 @@
 
 #import "LLUploaderAppDotNetCredentialsConfigurationViewController.h"
 #import "LLUploaderAppDotNetPresetConfigurationViewController.h"
+#import "LLUploaderAppDotNetMetadataViewController.h"
 
 static NSString * const _LLUploaderAppDotNetClientID = @"Vy3TT9w4eYAHvCnXEyfVqvXzKRn5GcLu";
 static NSString * const _LLUploaderAppDotNetClientSecret = @"vqHVnuKBGds8tGu9j9yJhM4KR3BuZaM4";
@@ -43,6 +44,11 @@ static NSString * const _LLUploaderAppDotNetPasswordGrantSecret = @"3ATd9EtxSDpj
 - (RMUploadPresetConfigurationViewController *)presetConfigurationViewControllerForPreset:(RMUploadPreset *)preset
 {
 	return [[[LLUploaderAppDotNetPresetConfigurationViewController alloc] init] autorelease];
+}
+
+- (RMUploadMetadataConfigurationViewController *)additionalMetadataViewControllerForPresetClass:(Class)presetClass
+{
+	return [[[LLUploaderAppDotNetMetadataViewController alloc] init] autorelease];
 }
 
 @end

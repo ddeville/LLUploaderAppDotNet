@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6D1E005216EBE8F700A51DC1 /* ADN_rounded.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 6D1E005116EBE8F700A51DC1 /* ADN_rounded.tiff */; };
+		6D1E005616EBE9DB00A51DC1 /* LLUploaderAppDotNetMetadataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D1E005416EBE9DA00A51DC1 /* LLUploaderAppDotNetMetadataViewController.m */; };
+		6D1E005B16EBEBBD00A51DC1 /* LLUploaderAppDotNetMetadataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D1E005A16EBE9ED00A51DC1 /* LLUploaderAppDotNetMetadataView.xib */; };
 		6D350F4B16E7E22900DEC7BE /* ADN.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 6D350F4A16E7E22900DEC7BE /* ADN.tiff */; };
 		6D42B65016E531FB00C96B4F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D42B64F16E531FB00C96B4F /* Cocoa.framework */; };
 		6D42B69C16E5359000C96B4F /* LLAppDotNetContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D42B69B16E5359000C96B4F /* LLAppDotNetContext.m */; };
@@ -27,6 +29,9 @@
 
 /* Begin PBXFileReference section */
 		6D1E005116EBE8F700A51DC1 /* ADN_rounded.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ADN_rounded.tiff; sourceTree = SOURCE_ROOT; };
+		6D1E005316EBE9DA00A51DC1 /* LLUploaderAppDotNetMetadataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLUploaderAppDotNetMetadataViewController.h; sourceTree = "<group>"; };
+		6D1E005416EBE9DA00A51DC1 /* LLUploaderAppDotNetMetadataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLUploaderAppDotNetMetadataViewController.m; sourceTree = "<group>"; };
+		6D1E005916EBE9ED00A51DC1 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/LLUploaderAppDotNetMetadataView.xib"; sourceTree = "<group>"; };
 		6D350F4A16E7E22900DEC7BE /* ADN.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ADN.tiff; sourceTree = SOURCE_ROOT; };
 		6D42B64C16E531FB00C96B4F /* AppDotNet.uploader */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppDotNet.uploader; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D42B64F16E531FB00C96B4F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -166,6 +171,9 @@
 				6D42B6E816E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.h */,
 				6D42B6E916E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.m */,
 				6D42B73116E5562400C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib */,
+				6D1E005316EBE9DA00A51DC1 /* LLUploaderAppDotNetMetadataViewController.h */,
+				6D1E005416EBE9DA00A51DC1 /* LLUploaderAppDotNetMetadataViewController.m */,
+				6D1E005A16EBE9ED00A51DC1 /* LLUploaderAppDotNetMetadataView.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -236,6 +244,7 @@
 				6D42B72F16E5562400C96B4F /* LLUploaderAppDotNetPresetConfigurationView.xib in Resources */,
 				6D350F4B16E7E22900DEC7BE /* ADN.tiff in Resources */,
 				6D1E005216EBE8F700A51DC1 /* ADN_rounded.tiff in Resources */,
+				6D1E005B16EBEBBD00A51DC1 /* LLUploaderAppDotNetMetadataView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,12 +263,21 @@
 				6D42B6E216E53BB600C96B4F /* LLUploaderAppDotNet-Constants.m in Sources */,
 				6D42B6E616E53C1200C96B4F /* LLUploaderAppDotNetCredentialsConfigurationViewController.m in Sources */,
 				6D42B6EB16E53C2C00C96B4F /* LLUploaderAppDotNetPresetConfigurationViewController.m in Sources */,
+				6D1E005616EBE9DB00A51DC1 /* LLUploaderAppDotNetMetadataViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		6D1E005A16EBE9ED00A51DC1 /* LLUploaderAppDotNetMetadataView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6D1E005916EBE9ED00A51DC1 /* en-GB */,
+			);
+			name = LLUploaderAppDotNetMetadataView.xib;
+			sourceTree = "<group>";
+		};
 		6D42B69516E534CF00C96B4F /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
