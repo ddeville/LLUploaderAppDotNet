@@ -21,4 +21,9 @@
 	return [self initWithNibName:@"LLUploaderAppDotNetMetadataView" bundle:[NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier]];
 }
 
+- (void)loadView
+{
+	[super loadView];
+}
+
 @end

@@ -10,4 +10,9 @@
 
 @interface LLUploaderAppDotNetMetadataViewController : RMUploadMetadataConfigurationViewController
 
+@property (assign, nonatomic) IBOutlet NSButton *postCheckBox;
+@property (assign, nonatomic) IBOutlet NSTextField *postCharactersCountTextField;
+
+@property (assign, nonatomic) IBOutlet NSTextField *postTextField;
+
 @end
