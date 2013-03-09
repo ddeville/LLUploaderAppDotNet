@@ -11,3 +11,6 @@
 NSString * const LLUploaderAppDotNetBundleIdentifier = @"com.lickalemon.uploader.appdotnet";
 
 NSString * const LLUploaderAppDotNetErrorDomain = @"com.lickalemon.uploader.appdotnet";
+
+NSString * const LLUploaderAppDotNetMetadataPostConfirmationKey = @"metadataPostConfirmation";
+NSString * const LLUploaderAppDotNetMetadataPostContentKey = @"metadataPostContent";

@@ -20,3 +20,6 @@ typedef NS_ENUM (NSInteger, LLUploaderAppDotNetErrorCode) {
 	
 	LLUploaderAppDotNetErrorStorage = -200,
 };
+
+extern NSString * const LLUploaderAppDotNetMetadataPostConfirmationKey;
+extern NSString * const LLUploaderAppDotNetMetadataPostContentKey;
