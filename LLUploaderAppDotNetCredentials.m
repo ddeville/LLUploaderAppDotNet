@@ -91,7 +91,7 @@ static inline NSString *_LLUploaderAppDotNetOAuthServiceName(void) {
 	void (^returnError)(NSError *) = ^ void (NSError *underlyingError) {
 		if (errorRef != NULL) {
 			NSMutableDictionary *errorInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-											  NSLocalizedStringFromTableInBundle(@"Couldn\u2019t save your App.net access token", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderAppDotNetCredentials write keychain error description"), NSLocalizedDescriptionKey,
+											  NSLocalizedStringFromTableInBundle(@"Couldn\u2019t sign in to App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderAppDotNetCredentials write keychain error description"), NSLocalizedDescriptionKey,
 											  NSLocalizedStringFromTableInBundle(@"Your Keychain could not be opened to save your access token, please try again.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderAppDotNetCredentials write keychain access denied error recovery suggestion"), NSLocalizedRecoverySuggestionErrorKey,
 											  nil];
 			[errorInfo setValue:underlyingError forKey:NSUnderlyingErrorKey];
@@ -142,7 +142,7 @@ static inline NSString *_LLUploaderAppDotNetOAuthServiceName(void) {
 	void (^returnFindKeychainItemError)(NSError *) = ^ void (NSError *underlyingError) {
 		if (errorRef != NULL) {
 			NSMutableDictionary *errorInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-											  NSLocalizedStringFromTableInBundle(@"Couldn\u2019t find your App.net access token", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderAppDotNetCredentials read keychain access denied error description"), NSLocalizedDescriptionKey,
+											  NSLocalizedStringFromTableInBundle(@"Couldn\u2019t sign in to App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderAppDotNetCredentials read keychain access denied error description"), NSLocalizedDescriptionKey,
 											  NSLocalizedStringFromTableInBundle(@"Your access token could not be found in your Keychain, please sign in and try again.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderAppDotNetCredentials read keychain access denied error recovery suggestion"), NSLocalizedRecoverySuggestionErrorKey,
 											  nil];
 			[errorInfo setValue:underlyingError forKey:NSUnderlyingErrorKey];

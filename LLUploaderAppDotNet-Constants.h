@@ -17,4 +17,6 @@ typedef NS_ENUM (NSInteger, LLUploaderAppDotNetErrorCode) {
 	
 	LLUploaderAppDotNetErrorCodeInvalidCredentials = -100,
 	LLUploaderAppDotNetErrorCodeKeychain = -101,
+	
+	LLUploaderAppDotNetErrorStorage = -200,
 };

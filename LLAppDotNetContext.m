@@ -86,7 +86,7 @@ static NSString * const LLAppDotNetContextBaseAPI = @"https://alpha-api.app.net/
 	return request;
 }
 
-+ (NSString *)parseAuthenticationResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider username:(NSString **)usernameRef error:(NSError **)errorRef
++ (NSString *)parseAuthenticationResponseWithProvider:(LLAppDotNetResponseProvider)responseProvider username:(NSString **)usernameRef error:(NSError **)errorRef
 {
 	NSParameterAssert(usernameRef != nil);
 	
@@ -188,7 +188,7 @@ static NSString * const LLAppDotNetContextUserEndpoint = @"/stream/0/users/me";
 	return request;
 }
 
-+ (NSString *)parseUserResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef
++ (NSString *)parseUserResponseWithProvider:(LLAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef
 {
 	NSURLResponse *response = nil;
 	NSData *bodyData = responseProvider(&response, errorRef);
@@ -196,7 +196,7 @@ static NSString * const LLAppDotNetContextUserEndpoint = @"/stream/0/users/me";
 		return nil;
 	}
 	
-	BOOL responseOK = [self _checkResponse:response bodyData:bodyData error:errorRef];
+	BOOL responseOK = [self _checkResponse:response bodyData:bodyData errorDescription:NSLocalizedStringFromTableInBundle(@"Couldn\u2019t load your details", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext user loading error description") error:errorRef];
 	if (!responseOK) {
 		return nil;
 	}
@@ -294,7 +294,7 @@ static NSString * const LLAppDotNetContextUploadEndpoint = @"stream/0/files";
 	return request;
 }
 
-+ (NSURL *)parseUploadFileResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef
++ (NSURL *)parseUploadFileResponseWithProvider:(LLAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef
 {
 	NSURLResponse *response = nil;
 	NSData *bodyData = responseProvider(&response, errorRef);
@@ -302,7 +302,7 @@ static NSString * const LLAppDotNetContextUploadEndpoint = @"stream/0/files";
 		return nil;
 	}
 	
-	BOOL responseOK = [self _checkResponse:response bodyData:bodyData error:errorRef];
+	BOOL responseOK = [self _checkResponse:response bodyData:bodyData errorDescription:NSLocalizedStringFromTableInBundle(@"Couldn\u2019t upload to App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext uploading error description") error:errorRef];
 	if (!responseOK) {
 		return nil;
 	}
@@ -350,8 +350,10 @@ static NSString * const LLAppDotNetContextUploadEndpoint = @"stream/0/files";
 
 #pragma mark - Response (Private)
 
-+ (BOOL)_checkResponse:(NSURLResponse *)response bodyData:(NSData *)bodyData error:(NSError **)errorRef
++ (BOOL)_checkResponse:(NSURLResponse *)response bodyData:(NSData *)bodyData errorDescription:(NSString *)errorDescription error:(NSError **)errorRef
 {
+	NSParameterAssert(errorDescription != nil);
+	
 	NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
 	if (statusCode >= 200 && statusCode <= 299) {
 		return YES;
@@ -362,21 +364,25 @@ static NSString * const LLAppDotNetContextUploadEndpoint = @"stream/0/files";
 	}
 	
 	NSDictionary *statusCodeToRecoverySuggestionMap = @{
-		@(400) : NSLocalizedStringFromTableInBundle(@"", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @""),
+		@(401) : NSLocalizedStringFromTableInBundle(@"Your App.net sign-in details have expired, please sign in again.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext authentication recovery suggestion"),
 		@(413) : NSLocalizedStringFromTableInBundle(@"This file is too large for App.net. Please visit the App.net support page for information about size limits.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext file too large error recovery suggestion"),
 		@(507) : NSLocalizedStringFromTableInBundle(@"You don\u2019t have enough space in your App.net Files storage for this file. Please upgrade your account or delete some file from your Files storage.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext insufficient storage error recovery suggestion"),
 	};
 	
-	NSString *recoverySuggestion = statusCodeToRecoverySuggestionMap[@(statusCode)];
-	if (recoverySuggestion == nil) {
-		recoverySuggestion = NSLocalizedStringFromTableInBundle(@"", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"");
-	}
+	NSDictionary *statusCodeToErrorCodeMap = @{
+		@(401) : @(LLUploaderAppDotNetErrorCodeInvalidCredentials),
+		@(413) : @(LLUploaderAppDotNetErrorStorage),
+		@(517) : @(LLUploaderAppDotNetErrorStorage),
+	};
+	
+	NSString *recoverySuggestion = statusCodeToRecoverySuggestionMap[@(statusCode)] ? : NSLocalizedStringFromTableInBundle(@"An unexpected App.net error has occurred. Please try again.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected app.net error recovery suggestion");
+	NSNumber *errorCode = statusCodeToErrorCodeMap[@(statusCode)] ? : @(LLUploaderAppDotNetUnknownError);
 	
 	NSDictionary *errorInfo = @{
-		NSLocalizedDescriptionKey : @"",
-		NSLocalizedRecoveryOptionsErrorKey : recoverySuggestion,
+		NSLocalizedDescriptionKey : errorDescription,
+		NSLocalizedRecoverySuggestionErrorKey : recoverySuggestion,
 	};
-	*errorRef = [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:0 userInfo:errorInfo];
+	*errorRef = [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:[errorCode integerValue] userInfo:errorInfo];
 	
 	return NO;
 }

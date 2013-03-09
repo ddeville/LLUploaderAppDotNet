@@ -118,7 +118,7 @@
 
 - (void)connection:(RMUploadURLConnection *)connection didCompleteWithData:(NSData *)responseData
 {
-	RMAppDotNetResponseProvider responseProvider = ^ NSData * (NSURLResponse **responseRef, NSError **errorRef) {
+	LLAppDotNetResponseProvider responseProvider = ^ NSData * (NSURLResponse **responseRef, NSError **errorRef) {
 		if (responseRef != NULL) {
 			*responseRef = [connection receivedResponse];
 		}

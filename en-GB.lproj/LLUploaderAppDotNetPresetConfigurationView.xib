@@ -48,10 +48,11 @@
 						<string key="NSFrame">{{115, 17}, {126, 26}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="280638756">
-							<int key="NSCellFlags">-2076180416</int>
+							<int key="NSCellFlags">-1539309504</int>
 							<int key="NSCellFlags2">2048</int>
 							<object class="NSFont" key="NSSupport" id="532892179">
 								<string key="NSName">LucidaGrande</string>
@@ -73,32 +74,19 @@
 								<array class="NSMutableArray" key="NSMenuItems">
 									<object class="NSMenuItem" id="322813018">
 										<reference key="NSMenu" ref="104602156"/>
-										<string key="NSTitle">Public</string>
+										<string key="NSTitle">Loading…</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<object class="NSCustomResource" key="NSOnImage" id="425632493">
+										<object class="NSCustomResource" key="NSOnImage">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">NSMenuCheckmark</string>
 										</object>
-										<object class="NSCustomResource" key="NSMixedImage" id="120554007">
+										<object class="NSCustomResource" key="NSMixedImage">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">NSMenuMixedState</string>
 										</object>
 										<string key="NSAction">_popUpItemAction:</string>
-										<int key="NSTag">1</int>
-										<reference key="NSTarget" ref="280638756"/>
-									</object>
-									<object class="NSMenuItem" id="996840966">
-										<reference key="NSMenu" ref="104602156"/>
-										<string key="NSTitle">Private</string>
-										<string key="NSKeyEquiv"/>
-										<int key="NSKeyEquivModMask">1048576</int>
-										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="425632493"/>
-										<reference key="NSMixedImage" ref="120554007"/>
-										<string key="NSAction">_popUpItemAction:</string>
-										<int key="NSTag">2</int>
 										<reference key="NSTarget" ref="280638756"/>
 									</object>
 								</array>
@@ -333,7 +321,6 @@
 						<reference key="object" ref="104602156"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="322813018"/>
-							<reference ref="996840966"/>
 						</array>
 						<reference key="parent" ref="280638756"/>
 					</object>
@@ -346,11 +333,6 @@
 						<int key="objectID">14</int>
 						<reference key="object" ref="206402082"/>
 						<reference key="parent" ref="1005"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">31</int>
-						<reference key="object" ref="996840966"/>
-						<reference key="parent" ref="104602156"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">33</int>
@@ -390,8 +372,6 @@
 				<string key="14.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="3.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<dictionary class="NSMutableDictionary" key="31.IBAttributePlaceholdersKey"/>
-				<string key="31.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="33.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="34.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="36.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

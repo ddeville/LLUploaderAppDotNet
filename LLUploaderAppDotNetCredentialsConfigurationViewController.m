@@ -134,7 +134,7 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 	
 	NSURLRequest *authenticationRequest = [context requestOAuthTokenCredentialsWithUsername:username password:password];
 	
-	[self setAuthenticationConnection:[RMUploadURLConnection _connectionWithRequest:authenticationRequest responseProviderBlock:^ (_RMUploadURLConnectionResponseProviderBlock responseProvider) {
+	[self setAuthenticationConnection:[RMUploadURLConnection _connectionWithRequest:authenticationRequest responseProviderBlock:^ void (LLAppDotNetResponseProvider responseProvider) {
 		[self setAuthenticationConnection:nil];
 		
 		NSString *authenticationUsername = nil;

@@ -10,7 +10,7 @@
 
 #import "LLUploaderAppDotNetPreset.h"
 
-typedef NSData * (^RMAppDotNetResponseProvider)(NSURLResponse **, NSError **);
+typedef NSData * (^LLAppDotNetResponseProvider)(NSURLResponse **, NSError **);
 
 @interface LLAppDotNetContext : NSObject
 
@@ -21,18 +21,18 @@ typedef NSData * (^RMAppDotNetResponseProvider)(NSURLResponse **, NSError **);
 	Authentication
  */
 - (NSURLRequest *)requestOAuthTokenCredentialsWithUsername:(NSString *)username password:(NSString *)password;
-+ (NSString *)parseAuthenticationResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider username:(NSString **)usernameRef error:(NSError **)errorRef;
++ (NSString *)parseAuthenticationResponseWithProvider:(LLAppDotNetResponseProvider)responseProvider username:(NSString **)usernameRef error:(NSError **)errorRef;
 
 /*
 	User retrieval
  */
 - (NSURLRequest *)requestCurrentUserInformation;
-+ (NSString *)parseUserResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef;
++ (NSString *)parseUserResponseWithProvider:(LLAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef;
 
 /*
 	Upload
  */
 - (NSURLRequest *)requestUploadFileAtURL:(NSURL *)fileLocation title:(NSString *)title description:(id)description tags:(NSArray *)tags privacy:(LLUploaderAppDotNetPresetPrivacy)privacy error:(NSError **)errorRef;
-+ (NSURL *)parseUploadFileResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef;
++ (NSURL *)parseUploadFileResponseWithProvider:(LLAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef;
 
 @end
