@@ -13,6 +13,8 @@
 
 #import "LLUploaderAppDotNet-Constants.h"
 
+static NSString * const LLAppDotNetContextBaseAPI = @"https://alpha-api.app.net/";
+
 #define _LLAppDotNetContextCast(cls, obj) ({ id __obj = (obj); [__obj isKindOfClass:[cls class]] ? __obj : nil; })
 
 @interface LLAppDotNetContext ()
@@ -84,9 +86,9 @@
 	return request;
 }
 
-+ (NSString *)parseAuthenticationResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider username:(NSString **)username error:(NSError **)errorRef
++ (NSString *)parseAuthenticationResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider username:(NSString **)usernameRef error:(NSError **)errorRef
 {
-	NSParameterAssert(username != nil);
+	NSParameterAssert(usernameRef != nil);
 	
 	NSURLResponse *response = nil;
 	NSData *bodyData = responseProvider(&response, errorRef);
@@ -138,7 +140,7 @@
 		return nil;
 	}
 	
-	*username = [responseJSON objectForKey:@"username"];
+	*usernameRef = [responseJSON objectForKey:@"username"];
 	
 	return accessToken;
 }
@@ -171,13 +173,35 @@
 	[request setValue:authenticationHeaderValue forHTTPHeaderField:_LLAppDotNetContextHTTPHeaderFieldAuthorization];
 }
 
+#pragma mark - User
+
+static NSString * const LLAppDotNetContextUserEndpoint = @"/stream/0/users/me";
+
+- (NSURLRequest *)requestCurrentUserInformation
+{
+	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
+	[request setHTTPMethod:@"GET"];
+	[request setURL:[NSURL URLWithString:[LLAppDotNetContextBaseAPI stringByAppendingString:LLAppDotNetContextUserEndpoint]]];
+	
+	[self _addAuthenticationToRequest:request];
+	
+	return request;
+}
+
++ (NSString *)parseUserResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef
+{
+	return nil;
+}
+
 #pragma mark - Upload
+
+static NSString * const LLAppDotNetContextUploadEndpoint = @"stream/0/files";
 
 - (NSURLRequest *)requestUploadFileAtURL:(NSURL *)fileLocation title:(NSString *)title description:(id)description tags:(NSArray *)tags privacy:(LLUploaderAppDotNetPresetPrivacy)privacy error:(NSError **)errorRef
 {
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
 	[request setHTTPMethod:@"POST"];
-	[request setURL:[NSURL URLWithString:@"https://alpha-api.app.net/stream/0/files"]];
+	[request setURL:[NSURL URLWithString:[LLAppDotNetContextBaseAPI stringByAppendingString:LLAppDotNetContextUploadEndpoint]]];
 	
 	RMUploadMultipartFormDocument *fileDocument = [[[RMUploadMultipartFormDocument alloc] init] autorelease];
 	

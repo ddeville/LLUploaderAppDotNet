@@ -17,9 +17,21 @@ typedef NSData * (^RMAppDotNetResponseProvider)(NSURLResponse **, NSError **);
 - (void)authenticateWithClientID:(NSString *)clientID passwordGrantSecret:(NSString *)passwordGrantSecret;
 - (void)authenticateWithUsername:(NSString *)username accessToken:(NSString *)accessToken;
 
+/*
+	Authentication
+ */
 - (NSURLRequest *)requestOAuthTokenCredentialsWithUsername:(NSString *)username password:(NSString *)password;
-+ (NSString *)parseAuthenticationResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider username:(NSString **)username error:(NSError **)errorRef;
++ (NSString *)parseAuthenticationResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider username:(NSString **)usernameRef error:(NSError **)errorRef;
 
+/*
+	User retrieval
+ */
+- (NSURLRequest *)requestCurrentUserInformation;
++ (NSString *)parseUserResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef;
+
+/*
+	Upload
+ */
 - (NSURLRequest *)requestUploadFileAtURL:(NSURL *)fileLocation title:(NSString *)title description:(id)description tags:(NSArray *)tags privacy:(LLUploaderAppDotNetPresetPrivacy)privacy error:(NSError **)errorRef;
 + (NSURL *)parseUploadFileResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef;
 
