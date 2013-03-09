@@ -190,7 +190,47 @@ static NSString * const LLAppDotNetContextUserEndpoint = @"/stream/0/users/me";
 
 + (NSString *)parseUserResponseWithProvider:(RMAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef
 {
-	return nil;
+	NSURLResponse *response = nil;
+	NSData *bodyData = responseProvider(&response, errorRef);
+	if (bodyData == nil) {
+		return nil;
+	}
+	
+	BOOL responseOK = [self _checkResponse:response bodyData:bodyData error:errorRef];
+	if (!responseOK) {
+		return nil;
+	}
+	
+	void (^returnUnexpectedError)(NSError *) = ^ (NSError *underlyingError) {
+		if (errorRef != NULL) {
+			NSMutableDictionary *errorInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+											  NSLocalizedStringFromTableInBundle(@"Couldn\u2019t retrieve the user\u2019s information from App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected upload error description"), NSLocalizedDescriptionKey,
+											  NSLocalizedStringFromTableInBundle(@"An unexpected App.net error has occurred. Please try again.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected app.net error recovery suggestion"), NSLocalizedRecoverySuggestionErrorKey,
+											  nil];
+			[errorInfo setValue:underlyingError forKey:NSUnderlyingErrorKey];
+			*errorRef = [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:LLUploaderAppDotNetUnknownError userInfo:errorInfo];
+		}
+	};
+	
+	NSError *deserializationError = nil;
+	id responseJSON = [NSJSONSerialization JSONObjectWithData:bodyData options:(NSJSONReadingOptions)0 error:&deserializationError];
+	if (responseJSON == nil) {
+		returnUnexpectedError(deserializationError);
+		return nil;
+	}
+	
+	NSDictionary *responseDocument = _LLAppDotNetContextCast(NSDictionary, responseJSON);
+	
+	NSDictionary *responseData = _LLAppDotNetContextCast(NSDictionary, responseDocument[@"data"]);
+	
+	NSString *username = _LLAppDotNetContextCast(NSString, responseData[@"username"]);
+	
+	if (username == nil) {
+		returnUnexpectedError(nil);
+		return nil;
+	}
+	
+	return username;
 }
 
 #pragma mark - Upload
@@ -291,19 +331,6 @@ static NSString * const LLAppDotNetContextUploadEndpoint = @"stream/0/files";
 	}
 	
 	NSDictionary *responseDocument = _LLAppDotNetContextCast(NSDictionary, responseJSON);
-	
-	NSDictionary *responseMeta = _LLAppDotNetContextCast(NSDictionary, responseDocument[@"meta"]);
-	
-	NSNumber *responseCode = _LLAppDotNetContextCast(NSNumber, responseMeta[@"code"]) ;
-	if (responseCode == nil) {
-		returnUnexpectedError(nil);
-		return nil;
-	}
-	
-	if ([responseCode integerValue] != 200) {
-		returnUnexpectedError(nil);
-		return nil;
-	}
 	
 	NSDictionary *responseData = _LLAppDotNetContextCast(NSDictionary, responseDocument[@"data"]);
 	
