@@ -350,8 +350,6 @@ static NSString * const LLAppDotNetContextFileUpdateEndpoint = @"stream/0/files/
 		return nil;
 	}
 	
-	NSLog(@"%@", [[[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding] autorelease]);
-	
 	BOOL responseOK = [self _checkResponse:response bodyData:bodyData errorDescription:NSLocalizedStringFromTableInBundle(@"Couldn\u2019t upload to App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext uploading error description") error:errorRef];
 	if (!responseOK) {
 		return nil;
