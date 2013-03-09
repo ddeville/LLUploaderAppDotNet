@@ -75,7 +75,7 @@ static NSString * const LLAppDotNetContextBaseAPI = @"https://alpha-api.app.net/
 	
 	NSDictionary *parameters = @{
 		@"grant_type" : @"password",
-		@"scope" : @"basic",
+		@"scope" : @"basic, files",
 		@"client_id" : [self clientID],
 		@"password_grant_secret" : [self passwordGrantSecret],
 		@"username" : username,
@@ -235,58 +235,28 @@ static NSString * const LLAppDotNetContextUserEndpoint = @"/stream/0/users/me";
 
 #pragma mark - Upload
 
-static NSString * const LLAppDotNetContextUploadEndpoint = @"stream/0/files";
+static NSString * const LLAppDotNetContextFileCreationEndpoint = @"stream/0/files";
 
-- (NSURLRequest *)requestUploadFileAtURL:(NSURL *)fileLocation title:(NSString *)title description:(id)description tags:(NSArray *)tags privacy:(LLUploaderAppDotNetPresetPrivacy)privacy error:(NSError **)errorRef
+static inline NSError *LLAppDotNetContextUploadError(NSError *underlyingError) {
+	NSMutableDictionary *errorInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+									  NSLocalizedStringFromTableInBundle(@"Couldn\u2019t upload to App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected upload error description"), NSLocalizedDescriptionKey,
+									  NSLocalizedStringFromTableInBundle(@"An unexpected App.net error has occurred. Please try again.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected app.net error recovery suggestion"), NSLocalizedRecoverySuggestionErrorKey,
+									  nil];
+	[errorInfo setValue:underlyingError forKey:NSUnderlyingErrorKey];
+	return [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:LLUploaderAppDotNetUnknownError userInfo:errorInfo];
+}
+
+- (NSURLRequest *)requestUploadFileContent:(NSURL *)fileLocation error:(NSError **)errorRef
 {
+	NSParameterAssert(fileLocation != nil);
+	
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
 	[request setHTTPMethod:@"POST"];
-	[request setURL:[NSURL URLWithString:[LLAppDotNetContextBaseAPI stringByAppendingString:LLAppDotNetContextUploadEndpoint]]];
+	[request setURL:[NSURL URLWithString:[LLAppDotNetContextBaseAPI stringByAppendingString:LLAppDotNetContextFileCreationEndpoint]]];
 	
 	RMUploadMultipartFormDocument *fileDocument = [[[RMUploadMultipartFormDocument alloc] init] autorelease];
-	
-	/*
-		File content
-	 */
 	[fileDocument addFileByReferencingURL:fileLocation withFilename:[fileLocation lastPathComponent] toField:@"content"];
-	
-	/*
-		Metadata
-	 */
-	NSString *hostApplicationType = [[NSBundle mainBundle] bundleIdentifier];
-	
-	[fileDocument setValue:hostApplicationType forField:@"type"];
-	[fileDocument setValue:title forField:@"name"];
-	[fileDocument setValue:[(privacy == LLUploaderAppDotNetPresetPrivacyPublic ? @YES : @NO) stringValue] forField:@"public"];
-	
-	/*
-		Annotations
-	 */
-#if 0
-	NSString *hostApplicationDescriptionType = [hostApplicationType stringByAppendingKeyPath:@"description"];
-	NSString *hostApplicationTagsType = [hostApplicationType stringByAppendingKeyPath:@"tags"];
-	
-	NSMutableArray *annotations = [NSMutableArray array];
-	if (description != nil) {
-		NSDictionary *descriptionAnnotation = @{
-			@"type" : hostApplicationDescriptionType,
-			@"value" : description,
-		};
-		[annotations addObject:descriptionAnnotation];
-	}
-	if (tags != nil) {
-		NSDictionary *tagsAnnotation = @{
-			@"type" : hostApplicationTagsType,
-			@"value" : tags,
-		};
-		[annotations addObject:tagsAnnotation];
-	}
-	
-	NSData *annotationsJSONData = [NSJSONSerialization dataWithJSONObject:annotations options:(NSJSONWritingOptions)0 error:NULL];
-	NSString *annotationsJSONString = [[NSString alloc] initWithData:annotationsJSONData encoding:NSUTF8StringEncoding];
-	[fileDocument setValue:annotationsJSONString forField:@"annotations"];
-#endif
-	
+	[fileDocument setValue:[[NSBundle mainBundle] bundleIdentifier] forField:@"type"];
 	[request setHTTPBodyDocument:fileDocument];
 	
 	[self _addAuthenticationToRequest:request];
@@ -294,7 +264,7 @@ static NSString * const LLAppDotNetContextUploadEndpoint = @"stream/0/files";
 	return request;
 }
 
-+ (NSURL *)parseUploadFileResponseWithProvider:(LLAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef
++ (NSString *)parseUploadFileContentResponseWithProvider:(LLAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef
 {
 	NSURLResponse *response = nil;
 	NSData *bodyData = responseProvider(&response, errorRef);
@@ -309,12 +279,7 @@ static NSString * const LLAppDotNetContextUploadEndpoint = @"stream/0/files";
 	
 	void (^returnUnexpectedError)(NSError *) = ^ (NSError *underlyingError) {
 		if (errorRef != NULL) {
-			NSMutableDictionary *errorInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-											  NSLocalizedStringFromTableInBundle(@"Couldn\u2019t upload to App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected upload error description"), NSLocalizedDescriptionKey,
-											  NSLocalizedStringFromTableInBundle(@"An unexpected App.net error has occurred. Please try again.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext unexpected app.net error recovery suggestion"), NSLocalizedRecoverySuggestionErrorKey,
-											  nil];
-			[errorInfo setValue:underlyingError forKey:NSUnderlyingErrorKey];
-			*errorRef = [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:LLUploaderAppDotNetUnknownError userInfo:errorInfo];
+			*errorRef = LLAppDotNetContextUploadError(underlyingError);
 		}
 	};
 	
@@ -322,6 +287,81 @@ static NSString * const LLAppDotNetContextUploadEndpoint = @"stream/0/files";
 		returnUnexpectedError(nil);
 		return nil;
 	}
+	
+	NSError *deserializationError = nil;
+	id responseJSON = [NSJSONSerialization JSONObjectWithData:bodyData options:(NSJSONReadingOptions)0 error:&deserializationError];
+	if (responseJSON == nil) {
+		returnUnexpectedError(deserializationError);
+		return nil;
+	}
+	
+	NSDictionary *responseDocument = _LLAppDotNetContextCast(NSDictionary, responseJSON);
+	
+	NSDictionary *responseData = _LLAppDotNetContextCast(NSDictionary, responseDocument[@"data"]);
+	
+	NSString *fileID = _LLAppDotNetContextCast(NSString, responseData[@"id"]);
+	if (fileID == nil) {
+		returnUnexpectedError(nil);
+		return nil;
+	}
+	
+	return fileID;
+}
+
+static NSString * const LLAppDotNetContextFileUpdateEndpoint = @"stream/0/files/%@";
+
+- (NSURLRequest *)requestUploadFileMetadata:(NSString *)fileID title:(NSString *)title description:(id)description tags:(NSArray *)tags privacy:(LLUploaderAppDotNetPresetPrivacy)privacy error:(NSError **)errorRef
+{
+	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
+	[request setHTTPMethod:@"PUT"];
+	[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	[request setURL:[NSURL URLWithString:[[LLAppDotNetContextBaseAPI stringByAppendingFormat:LLAppDotNetContextFileUpdateEndpoint, fileID] stringByAppendingString:@"?include_annotations=1"]]];
+	
+	NSMutableDictionary *hostApplicationAnnotations = [NSMutableDictionary dictionary];
+	[hostApplicationAnnotations setValue:description forKey:@"description"];
+	[hostApplicationAnnotations setValue:tags forKey:@"tags"];
+	NSDictionary *annotations = @{
+		@"type" : [[[NSBundle mainBundle] bundleIdentifier] stringByAppendingKeyPath:@"metadata"],
+		@"value" : hostApplicationAnnotations,
+	};
+	
+	NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
+	[metadata setValue:title forKey:@"name"];
+	[metadata setValue:(privacy == LLUploaderAppDotNetPresetPrivacyPublic ? @YES : @NO) forKey:@"public"];
+	[metadata setValue:@[annotations] forKey:@"annotations"];
+	
+	NSData *bodyData = [NSJSONSerialization dataWithJSONObject:metadata options:(NSJSONWritingOptions)0 error:errorRef];
+	if (bodyData == nil) {
+		return nil;
+	}
+	
+	[request setHTTPBody:bodyData];
+	
+	[self _addAuthenticationToRequest:request];
+	
+	return request;
+}
+
++ (NSURL *)parseUploadedFileMetadataWithProvider:(LLAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef
+{
+	NSURLResponse *response = nil;
+	NSData *bodyData = responseProvider(&response, errorRef);
+	if (bodyData == nil) {
+		return nil;
+	}
+	
+	NSLog(@"%@", [[[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding] autorelease]);
+	
+	BOOL responseOK = [self _checkResponse:response bodyData:bodyData errorDescription:NSLocalizedStringFromTableInBundle(@"Couldn\u2019t upload to App.net", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLAppDotNetContext uploading error description") error:errorRef];
+	if (!responseOK) {
+		return nil;
+	}
+	
+	void (^returnUnexpectedError)(NSError *) = ^ (NSError *underlyingError) {
+		if (errorRef != NULL) {
+			*errorRef = LLAppDotNetContextUploadError(underlyingError);
+		}
+	};
 	
 	NSError *deserializationError = nil;
 	id responseJSON = [NSJSONSerialization JSONObjectWithData:bodyData options:(NSJSONReadingOptions)0 error:&deserializationError];

@@ -22,7 +22,8 @@
 
 @property (retain, nonatomic) LLAppDotNetContext *context;
 
-@property (retain, nonatomic) RMUploadURLConnection *appDotNetConnection;
+@property (retain, nonatomic) RMUploadURLConnection *metadataUploadConnection;
+@property (retain, nonatomic) RMUploadURLConnection *contentUploadConnection;
 
 @end
 
@@ -33,7 +34,8 @@
 - (void)dealloc
 {
 	[_context release];
-	[_appDotNetConnection release];
+	[_metadataUploadConnection release];
+	[_contentUploadConnection release];
 	
 	[super dealloc];
 }
@@ -51,37 +53,62 @@
 	
 	[self setContext:context];
 	
-	[self _continueUpload];
+	[self _startUpload];
 }
 
 - (void)cancel
 {
 	[super cancel];
 	
-	[[self appDotNetConnection] cancel];
+	[[self metadataUploadConnection] cancel];
+	[[self contentUploadConnection] cancel];
 	
 	[self _postCompletionNotification];
 }
 
-#pragma mark - Private
+#pragma mark - Private (Upload)
 
-- (void)_continueUpload
+- (void)_startUpload
 {
 	NSURL *fileURL = [[self uploadInfo] valueForKey:RMUploadFileURLKey];
-	NSString *title = [[self uploadInfo] valueForKey:RMUploadFileTitleKey];
-	id description = [[self uploadInfo] valueForKey:RMUploadFileDescriptionKey];
-	NSArray *tags = [[self uploadInfo] valueForKey:RMUploadFileTagsKey];
-	LLUploaderAppDotNetPresetPrivacy privacy = [[self destination] privacy];
 	
-	NSError *requestUploadError = nil;
-	NSURLRequest *requestUpload = [[self context] requestUploadFileAtURL:fileURL title:title description:description tags:tags privacy:privacy error:&requestUploadError];
-	if (requestUpload == nil) {
-		[self _failWithError:requestUploadError];
+	NSError *fileUploadRequestError = nil;
+	NSURLRequest *fileUploadRequest = [[self context] requestUploadFileContent:fileURL error:&fileUploadRequestError];
+	if (fileUploadRequest == nil) {
+		[self _failWithError:fileUploadRequestError];
 		return;
 	}
 	
-	[self setAppDotNetConnection:[RMUploadURLConnection connectionWithRequest:requestUpload delegate:self]];
+	[self setContentUploadConnection:[RMUploadURLConnection connectionWithRequest:fileUploadRequest delegate:self]];
 }
+
+- (void)_continueUploadForFileID:(NSString *)fileID
+{
+	NSError *metadataUploadRequestError = nil;
+	NSURLRequest *metadataUploadRequest = [[self context] requestUploadFileMetadata:fileID title:[[self uploadInfo] valueForKey:RMUploadFileTitleKey] description:[[self uploadInfo] valueForKey:RMUploadFileDescriptionKey] tags:[[self uploadInfo] valueForKey:RMUploadFileTagsKey] privacy:[[self destination] privacy] error:&metadataUploadRequestError];
+	if (metadataUploadRequest == nil) {
+		[self _failWithError:metadataUploadRequestError];
+		return;
+	}
+	
+	[self setMetadataUploadConnection:[RMUploadURLConnection _connectionWithRequest:metadataUploadRequest responseProviderBlock:^ (_RMUploadURLConnectionResponseProviderBlock responseProvider) {
+		[self setMetadataUploadConnection:nil];
+		
+		NSError *fileURLParsingError = nil;
+		NSURL *fileURL = [LLAppDotNetContext parseUploadedFileMetadataWithProvider:responseProvider error:&fileURLParsingError];
+		if (fileURL == nil) {
+			[self _failWithError:fileURLParsingError];
+			return;
+		}
+		
+		NSDictionary *notificationInfo = @{RMUploadTaskResourceLocationKey : fileURL};
+		[[NSNotificationCenter defaultCenter] postNotificationName:RMUploadTaskDidFinishTransactionNotificationName object:self userInfo:notificationInfo];
+		
+		[self _postCompletionNotification];
+	}]];
+}
+
+#pragma mark - Private
 
 - (void)_failWithError:(NSError *)error
 {
@@ -125,17 +152,14 @@
 		return responseData;
 	};
 	
-	NSError *postLocationError = nil;
-	NSURL *postLocation = [LLAppDotNetContext parseUploadFileResponseWithProvider:responseProvider error:&postLocationError];
-	if (postLocation == nil) {
-		[self _failWithError:postLocationError];
+	NSError *fileIDParsingError = nil;
+	NSString *fileID = [LLAppDotNetContext parseUploadFileContentResponseWithProvider:responseProvider error:&fileIDParsingError];
+	if (fileID == nil) {
+		[self _failWithError:fileIDParsingError];
 		return;
 	}
 	
-	NSDictionary *notificationInfo = @{RMUploadTaskResourceLocationKey : postLocation};
-	[[NSNotificationCenter defaultCenter] postNotificationName:RMUploadTaskDidFinishTransactionNotificationName object:self userInfo:notificationInfo];
-	
-	[self _postCompletionNotification];
+	[self _continueUploadForFileID:fileID];
 }
 
 - (void)connection:(RMUploadURLConnection *)connection didFailWithError:(NSError *)error
