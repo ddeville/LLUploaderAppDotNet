@@ -24,6 +24,7 @@
 
 @property (retain, nonatomic) RMUploadURLConnection *metadataUploadConnection;
 @property (retain, nonatomic) RMUploadURLConnection *contentUploadConnection;
+@property (retain, nonatomic) RMUploadURLConnection *postConnection;
 
 @end
 
@@ -36,6 +37,7 @@
 	[_context release];
 	[_metadataUploadConnection release];
 	[_contentUploadConnection release];
+	[_postConnection release];
 	
 	[super dealloc];
 }
@@ -53,7 +55,7 @@
 	
 	[self setContext:context];
 	
-	[self _startUpload];
+	[self _startFileUpload];
 }
 
 - (void)cancel
@@ -62,13 +64,14 @@
 	
 	[[self metadataUploadConnection] cancel];
 	[[self contentUploadConnection] cancel];
+	[[self postConnection] cancel];
 	
 	[self _postCompletionNotification];
 }
 
 #pragma mark - Private (Upload)
 
-- (void)_startUpload
+- (void)_startFileUpload
 {
 	NSURL *fileURL = [[self uploadInfo] valueForKey:RMUploadFileURLKey];
 	
@@ -82,7 +85,7 @@
 	[self setContentUploadConnection:[RMUploadURLConnection connectionWithRequest:fileUploadRequest delegate:self]];
 }
 
-- (void)_continueUploadForFileID:(NSString *)fileID
+- (void)_startFileMetadataUpdate:(NSString *)fileID
 {
 	NSError *metadataUploadRequestError = nil;
 	NSURLRequest *metadataUploadRequest = [[self context] requestUploadFileMetadata:fileID title:[[self uploadInfo] valueForKey:RMUploadFileTitleKey] description:[[self uploadInfo] valueForKey:RMUploadFileDescriptionKey] tags:[[self uploadInfo] valueForKey:RMUploadFileTagsKey] privacy:[[self destination] privacy] error:&metadataUploadRequestError];
@@ -95,7 +98,8 @@
 		[self setMetadataUploadConnection:nil];
 		
 		NSError *fileURLParsingError = nil;
-		NSURL *fileURL = [LLAppDotNetContext parseUploadedFileMetadataWithProvider:responseProvider error:&fileURLParsingError];
+		NSString *fileToken = nil;
+		NSURL *fileURL = [LLAppDotNetContext parseUploadedFileMetadataResponseWithProvider:responseProvider fileToken:&fileToken error:&fileURLParsingError];
 		if (fileURL == nil) {
 			[self _failWithError:fileURLParsingError];
 			return;
@@ -103,6 +107,37 @@
 		
 		NSDictionary *notificationInfo = @{RMUploadTaskResourceLocationKey : fileURL};
 		[[NSNotificationCenter defaultCenter] postNotificationName:RMUploadTaskDidFinishTransactionNotificationName object:self userInfo:notificationInfo];
+		
+		[self _startPostUpdate:fileID fileToken:fileToken];
+	}]];
+}
+
+- (void)_startPostUpdate:(NSString *)fileID fileToken:(NSString *)fileToken
+{
+	BOOL shouldPost = [[[self uploadInfo] valueForKey:LLUploaderAppDotNetMetadataPostConfirmationKey] boolValue];
+	NSString *postContent = [[self uploadInfo] valueForKey:LLUploaderAppDotNetMetadataPostContentKey];
+	
+	if (!shouldPost || [postContent length] == 0) {
+		[self _postCompletionNotification];
+		return;
+	}
+	
+	NSError *postRequestError = nil;
+	NSURLRequest *postRequest = [[self context] requestPost:postContent fileID:fileID fileToken:fileToken error:&postRequestError];
+	if (postRequest == nil) {
+		[self _failWithError:postRequestError];
+		return;
+	}
+	
+	[self setPostConnection:[RMUploadURLConnection _connectionWithRequest:postRequest responseProviderBlock:^ (_RMUploadURLConnectionResponseProviderBlock responseProvider) {
+		[self setPostConnection:nil];
+		
+		NSError *postParsingError = nil;
+		NSString *postID = [LLAppDotNetContext parsePostResponseWithProvider:responseProvider error:&postParsingError];
+		if (postID == nil) {
+			[self _failWithError:postParsingError];
+			return;
+		}
 		
 		[self _postCompletionNotification];
 	}]];
@@ -159,7 +194,7 @@
 		return;
 	}
 	
-	[self _continueUploadForFileID:fileID];
+	[self _startFileMetadataUpdate:fileID];
 }
 
 - (void)connection:(RMUploadURLConnection *)connection didFailWithError:(NSError *)error

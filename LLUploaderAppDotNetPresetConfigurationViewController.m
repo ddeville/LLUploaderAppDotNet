@@ -107,9 +107,8 @@
 	
 	[[self privacyPopupButton] setMenu:privacyMenu];
 	
-	if ([[self privacyPopupButton] indexOfItemWithTag:[[self representedObject] privacy]] == -1) {
-		[[self privacyPopupButton] selectItemWithTag:LLUploaderAppDotNetPresetPrivacyPublic];
-	}
+	LLUploaderAppDotNetPresetPrivacy privacy = ([[self representedObject] privacy] == -1) ? LLUploaderAppDotNetPresetPrivacyPublic : [[self representedObject] privacy];
+	[[self privacyPopupButton] selectItemWithTag:privacy];
 	
 	[[self privacyPopupButton] setEnabled:YES];
 }
