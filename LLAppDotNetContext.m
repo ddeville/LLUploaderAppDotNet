@@ -276,7 +276,7 @@ static NSString * const LLAppDotNetContextFileUpdateEndpoint = @"/stream/0/files
 
 static NSString * const LLAppDotNetContextPostEndpoint = @"/stream/0/posts";
 
-- (NSURLRequest *)requestPost:(NSString *)postContent fileID:(NSString *)fileID fileToken:(NSString *)fileToken error:(NSError **)errorRef
+- (NSURLRequest *)requestPost:(NSString *)postContent fileID:(NSString *)fileID fileToken:(NSString *)fileToken fileUTI:(NSString *)fileUTI error:(NSError **)errorRef
 {
 	NSParameterAssert(fileID != nil);
 	NSParameterAssert(fileToken != nil);
@@ -289,11 +289,19 @@ static NSString * const LLAppDotNetContextPostEndpoint = @"/stream/0/posts";
 	NSMutableDictionary *attachmentAnnotation = [NSMutableDictionary dictionary];
 	[attachmentAnnotation setValue:fileID forKey:@"file_id"];
 	[attachmentAnnotation setValue:fileToken forKey:@"file_token"];
-	[attachmentAnnotation setValue:@"oembed" forKey:@"format"];
-	NSDictionary *annotations = @{
-		@"type" : @"net.app.core.oembed",
-		@"value" : @{@"+net.app.core.file" : attachmentAnnotation},
-	};
+	
+	NSMutableDictionary *annotations = [NSMutableDictionary dictionary];
+	
+	if (UTTypeConformsTo((CFStringRef)fileUTI, (CFStringRef)kUTTypeImage)) {
+		[attachmentAnnotation setValue:@"oembed" forKey:@"format"];
+		[annotations setValue:@"net.app.core.oembed" forKey:@"type"];
+		[annotations setValue:@{@"+net.app.core.file" : attachmentAnnotation} forKey:@"value"];
+	}
+	else {
+		[attachmentAnnotation setValue:@"metadata" forKey:@"format"];
+		[annotations setValue:@"net.app.core.attachments" forKey:@"type"];
+		[annotations setValue:@{@"+net.app.core.file_list" : @[attachmentAnnotation]} forKey:@"value"];
+	}
 	
 	NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
 	[metadata setValue:postContent forKey:@"text"];

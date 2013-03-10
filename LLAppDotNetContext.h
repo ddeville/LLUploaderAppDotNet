@@ -38,7 +38,7 @@ typedef NSData * (^LLAppDotNetResponseProvider)(NSURLResponse **, NSError **);
 - (NSURLRequest *)requestUploadFileMetadata:(NSString *)fileID title:(NSString *)title description:(id)description tags:(NSArray *)tags privacy:(LLUploaderAppDotNetPresetPrivacy)privacy error:(NSError **)errorRef;
 + (NSURL *)parseUploadedFileMetadataResponseWithProvider:(LLAppDotNetResponseProvider)responseProvider fileToken:(NSString **)fileTokenRef error:(NSError **)errorRef;
 
-- (NSURLRequest *)requestPost:(NSString *)postContent fileID:(NSString *)fileID fileToken:(NSString *)fileToken error:(NSError **)errorRef;
+- (NSURLRequest *)requestPost:(NSString *)postContent fileID:(NSString *)fileID fileToken:(NSString *)fileToken fileUTI:(NSString *)fileUTI error:(NSError **)errorRef;
 + (NSString *)parsePostResponseWithProvider:(LLAppDotNetResponseProvider)responseProvider error:(NSError **)errorRef;
 
 @end

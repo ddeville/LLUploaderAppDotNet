@@ -23,5 +23,3 @@ typedef NS_ENUM (NSInteger, LLUploaderAppDotNetErrorCode) {
 
 extern NSString * const LLUploaderAppDotNetMetadataPostConfirmationKey;
 extern NSString * const LLUploaderAppDotNetMetadataPostContentKey;
-
-extern NSString * const LLUploaderAppDotNetUploadInfoUUID;

@@ -14,5 +14,3 @@ NSString * const LLUploaderAppDotNetErrorDomain = @"com.lickalemon.uploader.appd
 
 NSString * const LLUploaderAppDotNetMetadataPostConfirmationKey = @"metadataPostConfirmation";
 NSString * const LLUploaderAppDotNetMetadataPostContentKey = @"metadataPostContent";
-
-NSString * const LLUploaderAppDotNetUploadInfoUUID = @"uploadInfoUUID";

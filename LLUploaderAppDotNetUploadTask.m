@@ -122,8 +122,10 @@
 		return;
 	}
 	
+	NSString *fileUTI = (NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef)[[[self uploadInfo] fileURL] pathExtension], NULL);
+	
 	NSError *postRequestError = nil;
-	NSURLRequest *postRequest = [[self context] requestPost:postContent fileID:fileID fileToken:fileToken error:&postRequestError];
+	NSURLRequest *postRequest = [[self context] requestPost:postContent fileID:fileID fileToken:fileToken fileUTI:fileUTI error:&postRequestError];
 	if (postRequest == nil) {
 		[self _failWithError:postRequestError];
 		return;
