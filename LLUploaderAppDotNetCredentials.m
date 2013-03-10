@@ -173,6 +173,12 @@ static inline NSString *_LLUploaderAppDotNetOAuthServiceName(void) {
 {
 	NSString * (^findPasswordForServer)(NSString *) = ^ NSString * (NSString *server) {
 		RMInternetKeychainItem *keychainItem = [RMInternetKeychainItem findKeychainItemForUsername:username server:@"alpha.app.net" path:nil port:0 protocol:RMInternetKeychainItemProtocolHTTPS];
+		if (keychainItem == nil) {
+			if (errorRef != NULL) {
+				*errorRef = [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:LLUploaderAppDotNetUnknownError userInfo:nil];
+			}
+			return nil;
+		}
 		BOOL refreshed = [keychainItem refreshItemFromKeychainIncludePassword:YES error:errorRef];
 		if (!refreshed) {
 			return nil;
