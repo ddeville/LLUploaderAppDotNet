@@ -175,7 +175,11 @@ static inline NSString *_LLUploaderAppDotNetOAuthServiceName(void) {
 		RMInternetKeychainItem *keychainItem = [RMInternetKeychainItem findKeychainItemForUsername:username server:@"alpha.app.net" path:nil port:0 protocol:RMInternetKeychainItemProtocolHTTPS];
 		if (keychainItem == nil) {
 			if (errorRef != NULL) {
-				*errorRef = [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:LLUploaderAppDotNetUnknownError userInfo:nil];
+				NSDictionary *userInfo = @{
+					NSLocalizedDescriptionKey : NSLocalizedStringFromTableInBundle(@"Couldn\u2019t find a matching username in the keychain", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderAppDotNetCredentials keychain item not found error description"),
+					NSLocalizedRecoverySuggestionErrorKey : NSLocalizedStringFromTableInBundle(@"No matching username could be found for this service in your keychain.", nil, [NSBundle bundleWithIdentifier:LLUploaderAppDotNetBundleIdentifier], @"LLUploaderAppDotNetCredentials keychain item not found error recovery suggestion"),
+				};
+				*errorRef = [NSError errorWithDomain:LLUploaderAppDotNetErrorDomain code:LLUploaderAppDotNetUnknownError userInfo:userInfo];
 			}
 			return nil;
 		}
