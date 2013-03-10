@@ -16,4 +16,7 @@
 
 + (BOOL)authenticateContext:(LLAppDotNetContext *)context withCredentials:(LLUploaderAppDotNetCredentials *)credentials error:(NSError **)errorRef;
 
+- (NSString *)postIDForUploadUUID:(NSString *)uploadUUID;
+- (void)setPostID:(NSString *)postID forUploadUUID:(NSString *)uploadUUID;
+
 @end

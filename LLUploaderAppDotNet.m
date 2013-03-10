@@ -19,7 +19,32 @@ static NSString * const _LLUploaderAppDotNetClientID = @"Vy3TT9w4eYAHvCnXEyfVqvX
 static NSString * const _LLUploaderAppDotNetClientSecret = @"vqHVnuKBGds8tGu9j9yJhM4KR3BuZaM4";
 static NSString * const _LLUploaderAppDotNetPasswordGrantSecret = @"3ATd9EtxSDpjQNakFhxnHrgs5HtPYYEg";
 
+@interface LLUploaderAppDotNet ()
+
+@property (retain, nonatomic) NSMutableDictionary *uploadUUIDToPostID;
+
+@end
+
 @implementation LLUploaderAppDotNet
+
+- (id)initWithBundle:(NSBundle *)bundle
+{
+	self = [super initWithBundle:bundle];
+	if (self == nil) {
+		return nil;
+	}
+	
+	_uploadUUIDToPostID = [[NSMutableDictionary alloc] init];
+	
+	return self;
+}
+
+- (void)dealloc
+{
+	[_uploadUUIDToPostID release];
+	
+	[super dealloc];
+}
 
 + (BOOL)authenticateContext:(LLAppDotNetContext *)context withCredentials:(LLUploaderAppDotNetCredentials *)credentials error:(NSError **)errorRef
 {
@@ -49,6 +74,22 @@ static NSString * const _LLUploaderAppDotNetPasswordGrantSecret = @"3ATd9EtxSDpj
 - (RMUploadMetadataConfigurationViewController *)additionalMetadataViewControllerForPresetClass:(Class)presetClass
 {
 	return [[[LLUploaderAppDotNetMetadataViewController alloc] init] autorelease];
+}
+
+- (NSString *)postIDForUploadUUID:(NSString *)uploadUUID
+{
+	NSString *postID = nil;
+	@synchronized (self) {
+		postID = [self uploadUUIDToPostID][uploadUUID];
+	}
+	return postID;
+}
+
+- (void)setPostID:(NSString *)postID forUploadUUID:(NSString *)uploadUUID
+{
+	@synchronized (self) {
+		[[self uploadUUIDToPostID] setObject:postID forKey:uploadUUID];
+	}
 }
 
 @end
