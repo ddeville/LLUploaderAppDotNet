@@ -17,4 +17,6 @@
 + (NSString *)accessTokenForCredentials:(LLUploaderAppDotNetCredentials *)credentials error:(NSError **)errorRef;
 + (BOOL)setAccessToken:(NSString *)accessToken forCredentials:(LLUploaderAppDotNetCredentials *)credentials error:(NSError **)errorRef;
 
++ (NSString *)findInternetPasswordForUsername:(NSString *)username error:(NSError **)errorRef;
+
 @end

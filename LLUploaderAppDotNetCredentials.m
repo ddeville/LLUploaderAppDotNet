@@ -167,4 +167,29 @@ static inline NSString *_LLUploaderAppDotNetOAuthServiceName(void) {
 	return keychainItem;
 }
 
+#pragma mark - Internet password
+
++ (NSString *)findInternetPasswordForUsername:(NSString *)username error:(NSError **)errorRef
+{
+	NSString * (^findPasswordForServer)(NSString *) = ^ NSString * (NSString *server) {
+		RMInternetKeychainItem *keychainItem = [RMInternetKeychainItem findKeychainItemForUsername:username server:@"alpha.app.net" path:nil port:0 protocol:RMInternetKeychainItemProtocolHTTPS];
+		BOOL refreshed = [keychainItem refreshItemFromKeychainIncludePassword:YES error:errorRef];
+		if (!refreshed) {
+			return nil;
+		}
+		return [keychainItem password];
+	};
+	
+	NSArray *servers = @[@"alpha.app.net", @"account.app.net"];
+	for (NSString *server in servers) {
+		NSString *password = findPasswordForServer(server);
+		if (password == nil) {
+			continue;
+		}
+		return password;
+	}
+	
+	return nil;
+}
+
 @end

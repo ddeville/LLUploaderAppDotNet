@@ -158,6 +158,23 @@ static NSString * const _LLUploaderAppDotNetCredentialsConfigurationViewControll
 	}]];
 }
 
+- (void)controlTextDidEndEditing:(NSNotification *)notification
+{
+	if ([notification object] != [self usernameTextField]) {
+		return;
+	}
+	
+	NSString *username = [[self usernameTextField] stringValue];
+	if ([username length] == 0) {
+		return;
+	}
+	
+	NSString *password = [LLUploaderAppDotNetCredentials findInternetPasswordForUsername:username error:NULL];
+	if (password != nil) {
+		[[self passwordTextField] setStringValue:password];
+	}
+}
+
 #pragma mark - Private
 
 - (void)_failWithError:(NSError *)error
