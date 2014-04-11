@@ -15,9 +15,11 @@
 #import "LLUploaderAppDotNetPresetConfigurationViewController.h"
 #import "LLUploaderAppDotNetMetadataViewController.h"
 
-static NSString * const _LLUploaderAppDotNetClientID = @"Vy3TT9w4eYAHvCnXEyfVqvXzKRn5GcLu";
-static NSString * const _LLUploaderAppDotNetClientSecret = @"vqHVnuKBGds8tGu9j9yJhM4KR3BuZaM4";
-static NSString * const _LLUploaderAppDotNetPasswordGrantSecret = @"3ATd9EtxSDpjQNakFhxnHrgs5HtPYYEg";
+#error Populate client ID and secret
+
+static NSString * const _LLUploaderAppDotNetClientID = @"";
+static NSString * const _LLUploaderAppDotNetClientSecret = @"";
+static NSString * const _LLUploaderAppDotNetPasswordGrantSecret = @"";
 
 @implementation LLUploaderAppDotNet
 
